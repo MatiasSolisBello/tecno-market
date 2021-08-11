@@ -1,5 +1,13 @@
+{% extends 'app/navbar.html' %}
+{% block contenido %}
+<h2 class="text-center">Contacto</h2>
+<form action="" method="POST">
 
-    {% extends 'app/navbar.html' %}
-    {% block contenido %}
-    <h2>Contacto</h2>
-    {% endblock %}
+    {% csrf_token %}
+    {{ form }}
+
+    <button type="submit" class="button">Enviar</button>
+</form>
+{{ mensaje }}
+
+{% endblock %}

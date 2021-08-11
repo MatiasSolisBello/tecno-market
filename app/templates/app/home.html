@@ -3,8 +3,26 @@
 
 <!--Definimos el contenido-->
 {% block contenido %}
-<h2>Home</h2>
 <div class="container">
-    <h3>Bienvenido</h3>
+    {% load humanize %}
+    <h2 class="text-center">Home</h2>
+    <br>
+    <div class="productos">
+        {% for p in productos %}
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card">
+                    {% if p.imagen %}
+                    <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.nombre | title }}</h5>
+                        <p class="card-text">${{ p.precio | intcomma }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
 </div>
-{% endblock %}
