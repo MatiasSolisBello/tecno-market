@@ -5,22 +5,23 @@
 {% block contenido %}
 <div class="container">
     {% load humanize %}
+    <br>
     <h2 class="text-center">Home</h2>
     <br>
-    <div class="productos">
+    <div class="row row-cols-1 row-cols-md-3">
         {% for p in productos %}
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col">
-                <div class="card">
-                    {% if p.imagen %}
-                    <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ p.nombre | title }}</h5>
-                        <p class="card-text">${{ p.precio | intcomma }}</p>
-                    </div>
+        <div class="col mb-4">
+            
+            <div class="card h-100">
+                {% if p.imagen %}
+                <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.nombre | title }}</h5>
+                    <p class="card-text">${{ p.precio | intcomma }}</p>
                 </div>
             </div>
+            
         </div>
         {% endfor %}
     </div>
