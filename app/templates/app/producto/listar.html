@@ -40,9 +40,9 @@
                 {% endif %}
             </td>
             <td>
-                <button class="btn btn-secondary btm-sm float-left">EDITAR</button>
+                <a href="{% url 'modificar' p.id %}" class="btn btn-secondary btm-sm">Modificar</a>
     
-                <button class="btn btn-danger btm-sm float-left">BORRAR</button>
+                <a href="{% url 'eliminar' p.id %}" class="btn btn-danger btm-sm">Borrar</a>
             </td>
         </tr>
         {% endfor %}
