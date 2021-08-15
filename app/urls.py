@@ -6,7 +6,7 @@ urlpatterns = [
     path('contacto/', contacto, name="contacto"),
     path('agregar/', agregar, name="agregar"),
     path('listar/', listar, name="listar"),
-    path('modificar/<id>', modificar, name="modificar"),
-    path('eliminar/<id>', eliminar, name="eliminar"),
+    path('modificar/<id>/', modificar, name="modificar"),
+    path('eliminar/<id>/', eliminar, name="eliminar"),
 
 ]

@@ -1,4 +1,28 @@
 {% extends 'app/navbar.html' %}
+
+{% block js %}
+<script>
+    
+    function eliminar(id){
+        console.log(id)
+        /*Swal.fire({
+            "title": "¿Esta seguro?",
+            "text": "esta accion no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "CancelButtonText": "No",
+            "confirmButtonText": "Si",
+            "reverseButtons": true
+        }).then(function(result) {
+            if(result.isConfirmed) {
+                window.location.href = "/eliminar/"+id+"/"
+            }
+        })*/
+    }
+</script>
+{% endblock %}
+
+
 {% block contenido %}
 
 {% load humanize %}
