@@ -51,7 +51,7 @@
             <th>Acciones</th>
         </tr>
 
-        {% for p in productos %}
+        {% for p in entity %}
         <tr>
             <td>{{ p.nombre | title }}</td>
             <td>${{ p.precio | intcomma }}</td>
@@ -71,6 +71,9 @@
         </tr>
         {% endfor %}
     </table>
+    <div>
+        {% include 'app/paginator.html' %}
+    </div>
 </div>
 
 {% endblock %}

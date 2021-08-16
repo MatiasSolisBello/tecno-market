@@ -37,6 +37,24 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'listar' %}">Productos</a>
           </li>
+
+          <!--Condicional de navbar para autenticacion-->
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">@{{ user.username }}</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Ingrese</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registro' %}">Registro</a>
+          </li>
+          {% endif %}
+
         </ul>
       </div>
     </div>
@@ -50,6 +68,7 @@
 
   <!--Sweet Alert-->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!--Si existe message, muestralos-->
   {% if messages %}
     {% for m in messages %}
