@@ -34,9 +34,13 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
           </li>
+
+          <!--Condicional para roles-->
+          {% if perms.app.view_producto %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'listar' %}">Productos</a>
           </li>
+          {% endif %}
 
           <!--Condicional de navbar para autenticacion-->
           {% if user.is_authenticated %}
