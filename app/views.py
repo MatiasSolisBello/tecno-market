@@ -6,6 +6,20 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
+from rest_framework import viewsets
+from .serializers import ProductoSerializer
+
+class ProductoViewset(viewsets.ModelViewSet):
+    queryset =Producto.objects.all()  #puedo reemplazar all() por filter()
+    serializer_class = ProductoSerializer
+
+    # Filtrar por variable de nombre => localhost:8000/api/producto/?nombre=televisor
+    def get_queryset(self):
+        productos = Producto.objects.all() 
+        nombre = self.request.GET.get('nombre')
+        if nombre:
+            productos = productos.filter(nombre__contains=nombre)
+        return productos
 
 #para mostrar solo si necesita login, sin importar permiso
 # @login_required

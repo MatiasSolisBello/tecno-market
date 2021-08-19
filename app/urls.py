@@ -1,5 +1,9 @@
-from django.urls import path
-from .views import home, contacto, agregar, listar, modificar, eliminar, registro
+from django.urls import path, include
+from .views import home, contacto, agregar, listar, modificar, eliminar, registro, ProductoViewset
+from rest_framework import routers
+
+router =routers.DefaultRouter()
+router.register('producto', ProductoViewset)
 
 urlpatterns = [
     # url / vista /alias
@@ -10,8 +14,8 @@ urlpatterns = [
     path('listar/', listar, name="listar"),
     path('modificar/<id>/', modificar, name="modificar"),
     path('eliminar/<id>/', eliminar, name="eliminar"),
-
     path('registro/', registro, name="registro"),
+    path('api/', include(router.urls)),
 
 
 ]
