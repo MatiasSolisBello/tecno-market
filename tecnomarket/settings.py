@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)3q*&9)d_n6*n9wz&!+%i6ugb*4&)i8+&-8^tt)($)675gy9d%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -171,3 +171,24 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+PWA_APP_NAME = "TecnoMarket"
+PWA_APP_THEME_COLOR = "#3477f5"
+PWA_APP_BACKGROUND = "#6699f7"
+
+PWA_APP_ICONS = [
+    {
+        "src": "/static/favicon/food.png",
+        "sizes": "512x512"
+    }
+]
+
+PWA_APP_ICONS_APPLE = [
+    {
+        "src": "/static/favicon/food.png",
+        "sizes": "512x512"
+    }
+]
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, "serviceworker.js")

@@ -21,6 +21,9 @@ class ProductoForm(forms.ModelForm):
     #precio con min. y max. de valor
     precio = forms.IntegerField(min_value=1, max_value=1500000)
 
+    # fecha
+    fecha_fabricacion = forms.DateField(required=True)
+
     # nombre no se puede repetir
     def clean_nombre(self):
         nombre = self.cleaned_data["nombre"]
@@ -37,10 +40,11 @@ class ProductoForm(forms.ModelForm):
         fields = '__all__'
     
         #Transforma la fecha a widget para mejor visualizacion
+        """
         widgets= {
-            "fecha_fabricacion": forms.SelectDateWidget()
+            "fecha_fabricacion": forms.DateField()
         }
-
+        """
 class CustomUserCreationForm(UserCreationForm):
     
     #personalizar formulario de registro
