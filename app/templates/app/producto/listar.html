@@ -51,7 +51,9 @@
             <th>Precio</th>
             <th>Marca</th>
             <th>Nuevo</th>
+            {% if perms.app.change_producto and perms.app.delete_producto %}
             <th>Acciones</th>
+            {% endif %}
         </tr>
 
         {% for p in entity %}
@@ -66,15 +68,19 @@
                 NO
                 {% endif %}
             </td>
-            <td>
+            
                 {% if perms.app.change_producto %}
+                <td>
                     <a href="{% url 'modificar' p.id %}" class="btn btn-secondary btm-sm">Modificar</a>
+                
                 {% endif %}
     
                 {% if perms.app.delete_producto %}
+                
                     <a href="{% url 'eliminar' p.id %}" class="btn btn-danger btm-sm">Borrar</a>
+                </td>
                 {% endif %}
-            </td>
+            
         </tr>
         {% endfor %}
     </table>
