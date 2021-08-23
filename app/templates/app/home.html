@@ -7,7 +7,6 @@
     {% load humanize %}
     <br>
     <h2 class="text-center">Home</h2>
-    <br>
     <div class="row row-cols-1 row-cols-md-3">
         {% for p in productos %}
         <div class="col mb-4">
@@ -19,6 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ p.nombre | title }}</h5>
                     <p class="card-text">${{ p.precio | intcomma }}</p>
+                    <a href="{% url 'detalles' p.id %}" class="btn btn-warning btn-block">Ver mas</a>
                 </div>
             </div>
             

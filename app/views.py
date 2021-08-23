@@ -32,6 +32,13 @@ def home(request):
     }
     return render(request, 'app/home.html', data)
 
+def detalles(request, id):
+    productos = get_object_or_404(Producto, id=id)
+    data = {
+        'productos': productos
+    }
+    return render(request, 'app/producto/detalles.html', data)
+
 def contacto(request):
     data = {
         'form': ContactoForm()
@@ -81,7 +88,7 @@ def listar(request):
     }
     return render(request, 'app/producto/listar.html', data)
 
-@permission_required('app.chaange_producto')
+@permission_required('app.change_producto')
 def modificar(request, id):
     producto = get_object_or_404(Producto, id=id)
     data = {

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import home, contacto, agregar, listar, modificar, eliminar, registro, ProductoViewset
+from .views import home, contacto, agregar, listar, detalles, modificar, eliminar, registro, ProductoViewset
 from rest_framework import routers
 
 router =routers.DefaultRouter()
@@ -12,6 +12,7 @@ urlpatterns = [
     path('contacto/', contacto, name="contacto"),
     path('agregar/', agregar, name="agregar"),
     path('listar/', listar, name="listar"),
+    path('detalles/<id>/', detalles, name="detalles"),
     path('modificar/<id>/', modificar, name="modificar"),
     path('eliminar/<id>/', eliminar, name="eliminar"),
     path('registro/', registro, name="registro"),
