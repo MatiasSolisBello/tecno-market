@@ -42,13 +42,13 @@ LOGIN_ERROR_URL = '/accounts/login/'
 
 # Application definition
 INSTALLED_APPS = [
+    'app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
     'django.contrib.humanize',
     'crispy_forms',
     'rest_framework',
@@ -74,7 +74,8 @@ ROOT_URLCONF = 'tecnomarket.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
+        #'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
