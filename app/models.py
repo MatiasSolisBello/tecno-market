@@ -14,10 +14,18 @@ class Producto(models.Model):
     nuevo = models.BooleanField()
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
     fecha_fabricacion = models.DateField()
-    imagen = models.ImageField(upload_to="productos", null=True)
+    #imagen = models.ImageField(upload_to="productos", null=True)
 
     def __str__(self):
         return self.nombre
+
+
+class ImagenProducto(models.Model):
+    imagen = models.ImageField(upload_to="productos")
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name="imagenes")
+
+    def __str__(self):
+            return self.imagen
 
 opciones_consultas = [
     [0, "Consulta"],

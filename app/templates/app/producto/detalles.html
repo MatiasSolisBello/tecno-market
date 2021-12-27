@@ -9,7 +9,7 @@
     <h2>Detalles del producto</h2>
     <div class="row mt-4">
         <div class="col-5">
-            <img src="{{ productos.imagen.url }}" alt="" class="img-thumbnail">
+            <img src="{{ productos.imagenes.first.imagen.url }}" alt="" class="img-thumbnail">
         </div>
         <div class="col-6">
             <h2 class="display-4">{{ productos.nombre }}</h2>

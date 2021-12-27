@@ -34,8 +34,10 @@ def home(request):
 
 def detalles(request, id):
     productos = get_object_or_404(Producto, id=id)
+    #imagenes = ImagenProducto.objects.filter(imagenes=imagenes)
     data = {
-        'productos': productos
+        'productos': productos,
+        #'imagenes': imagenes
     }
     return render(request, 'app/producto/detalles.html', data)
 

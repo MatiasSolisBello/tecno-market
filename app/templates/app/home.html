@@ -12,8 +12,8 @@
         <div class="col mb-4">
             
             <div class="card h-100">
-                {% if p.imagen %}
-                <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
+                {% if p.imagenes %}
+                <img class="card-img-top" src="{{ p.imagenes.first.imagen.url }}" alt="imagen">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ p.nombre | title }}</h5>
