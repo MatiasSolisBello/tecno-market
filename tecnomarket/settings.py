@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'social_django',
     'pwa',
+    'django_cleanup',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

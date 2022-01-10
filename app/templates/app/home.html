@@ -6,7 +6,8 @@
 <div class="container">
     {% load humanize %}
     <br>
-    <h2>Home</h2>
+    <h2>Productos</h2>
+    <br>
     <div class="row row-cols-1 row-cols-md-3">
         {% for p in productos %}
         <div class="col mb-4">
@@ -25,10 +26,10 @@
 
 
         </div>
-        
-    </div>
-    {% empty %}
+        {% empty %}
         <p>No hay producto aun</p>
+    </div>
+    
     
     {% endfor %}
 

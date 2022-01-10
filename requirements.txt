@@ -4,3 +4,4 @@ django-crispy-forms
 django-rest-framework
 social-auth-app-django
 django-pwa
+django-cleanup
