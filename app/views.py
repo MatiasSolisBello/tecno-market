@@ -24,7 +24,9 @@ class ProductoViewset(viewsets.ModelViewSet):
 #para mostrar solo si necesita login, sin importar permiso
 # @login_required
 
+# --------------------------
 # Create your views here.
+#---------------------------
 def home(request):
     productos = Producto.objects.all()
     data = {
@@ -34,10 +36,8 @@ def home(request):
 
 def detalles(request, id):
     productos = get_object_or_404(Producto, id=id)
-    #imagenes = ImagenProducto.objects.filter(imagenes=imagenes)
     data = {
-        'productos': productos,
-        #'imagenes': imagenes
+        'productos': productos
     }
     return render(request, 'app/producto/detalles.html', data)
 

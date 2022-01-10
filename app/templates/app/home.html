@@ -6,24 +6,32 @@
 <div class="container">
     {% load humanize %}
     <br>
-    <h2 class="text-center">Home</h2>
+    <h2>Home</h2>
     <div class="row row-cols-1 row-cols-md-3">
         {% for p in productos %}
         <div class="col mb-4">
-            
+
             <div class="card h-100">
-                {% if p.imagenes %}
-                <img class="card-img-top" src="{{ p.imagenes.first.imagen.url }}" alt="imagen">
+                {% if p.imagen %}
+                <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ p.nombre | title }}</h5>
                     <p class="card-text">${{ p.precio | intcomma }}</p>
                     <a href="{% url 'detalles' p.id %}" class="btn btn-warning btn-block">Ver mas</a>
                 </div>
+
             </div>
-            
+
+
         </div>
-        {% endfor %}
+        
     </div>
+    {% empty %}
+        <p>No hay producto aun</p>
+    
+    {% endfor %}
+
+
     {% endblock %}
 </div>

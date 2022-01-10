@@ -40,11 +40,10 @@ class ProductoForm(forms.ModelForm):
         fields = '__all__'
     
         #Transforma la fecha a widget para mejor visualizacion
-        """
         widgets= {
             "fecha_fabricacion": forms.DateField()
         }
-        """
+        
 class CustomUserCreationForm(UserCreationForm):
     
     #personalizar formulario de registro
