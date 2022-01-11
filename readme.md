@@ -1,10 +1,29 @@
-'pip install -r requirements.txt'
+## Comandos clave
 
-'py manage.py runserver'
+Instalar paguetes necesarios
 
+```bash
+  pip install -r requirements.txt
+```
 
-'py manage.py makemigrations'
-'py manage.py migrate'
+Ejecutar servidor
+```bash
+  py manage.py runserver
+```
 
+Migraciones
+```bash
+  py manage.py makemigrations
+  py manage.py migrate
+```
 
-'py manage.py createsuperuser'
+Crear superusuario
+```bash
+  py manage.py createsuperuser
+```
+
+## Usuarios
+
+* admin / admin123
+* alonso / heave-decompose  (se le asigna permiso view_producto) 
+* Auth mediante Facebook

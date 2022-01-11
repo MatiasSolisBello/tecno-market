@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
 from django.forms import ValidationError
 
+
+
 class ContactoForm(forms.ModelForm):
     class Meta:
         model = Contacto
@@ -41,7 +43,7 @@ class ProductoForm(forms.ModelForm):
     
         #Transforma la fecha a widget para mejor visualizacion
         widgets= {
-            "fecha_fabricacion": forms.DateField()
+            "fecha_fabricacion": forms.SelectDateWidget()
         }
         
 class CustomUserCreationForm(UserCreationForm):
