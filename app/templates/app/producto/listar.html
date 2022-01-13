@@ -51,6 +51,7 @@
             <th>Precio</th>
             <th>Marca</th>
             <th>Nuevo</th>
+            <th>Fabricación</th>
             {% if perms.app.change_producto and perms.app.delete_producto %}
             <th>Acciones</th>
             {% endif %}
@@ -61,6 +62,7 @@
             <td>{{ p.nombre | title }}</td>
             <td>${{ p.precio | intcomma }}</td>
             <td>{{ p.marca | title }}</td>
+            
             <td>
                 {% if p.nuevo %}
                 SI
@@ -68,6 +70,7 @@
                 NO
                 {% endif %}
             </td>
+            <td>{{ p.fecha_fabricacion }}</td>
             
                 {% if perms.app.change_producto %}
                 <td>

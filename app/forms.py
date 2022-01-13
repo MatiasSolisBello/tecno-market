@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
 from django.forms import ValidationError
 
+#
+from functools import partial
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
+
 
 
 class ContactoForm(forms.ModelForm):
@@ -24,7 +28,7 @@ class ProductoForm(forms.ModelForm):
     precio = forms.IntegerField(min_value=1, max_value=1500000)
 
     # fecha
-    fecha_fabricacion = forms.DateField(required=True)
+    fecha_fabricacion = forms.DateField(widget=DateInput())
 
     # nombre no se puede repetir
     def clean_nombre(self):

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>TecnoMarket</title>
 
   {% load static %}
@@ -30,52 +30,52 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <form class="d-flex">
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
-          </li>
-         
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+            </li>
 
-          <!--Condicional para roles-->
-          {% if perms.app.view_producto %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'listar' %}">Productos</a>
-          </li>
 
-          {% endif %}
+            <!--Condicional para roles-->
+            {% if perms.app.view_producto %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listar' %}">Productos</a>
+            </li>
 
-          <!--Condicional de navbar para autenticacion-->
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">@{{ user.username }}</a>
-          </li>
-          <li>
-            {% for auth in backends.associated %}
-            {% if auth.provider == 'facebook' %}
-              <img src="{{ auth.extra_data.picture.data.url }}" alt="" width="50" height="50">
             {% endif %}
-            {% endfor %}
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Ingrese</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'registro' %}">Registro</a>
-          </li>
-         
-          {% endif %}
 
-        </ul>
-      </div>
-    </form>
+            <!--Condicional de navbar para autenticacion-->
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">@{{ user.username }}</a>
+            </li>
+            <li>
+              {% for auth in backends.associated %}
+              {% if auth.provider == 'facebook' %}
+              <img src="{{ auth.extra_data.picture.data.url }}" alt="" width="50" height="50">
+              {% endif %}
+              {% endfor %}
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Ingrese</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'registro' %}">Registro</a>
+            </li>
+
+            {% endif %}
+
+          </ul>
+        </div>
+      </form>
     </div>
   </nav>
 
@@ -90,15 +90,15 @@
 
   <!--Si existe message, muestralos-->
   {% if messages %}
-    {% for m in messages %}
-      <script>
-        Swal.fire({
-          "title": "Felicitaciones",
-          "text": "{{m}}",
-          "icon": "success"
-        })
-      </script>
-    {% endfor %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title": "Felicitaciones",
+      "text": "{{m}}",
+      "icon": "success"
+    })
+  </script>
+  {% endfor %}
   {% endif %}
 
   <!--Booostrap-->
@@ -108,6 +108,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
     integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
     crossorigin="anonymous"></script>
+
+  <!--JQuery-->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.datepicker').datepicker();
+    });
+  </script>
 </body>
 
 </html>
