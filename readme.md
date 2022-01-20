@@ -1,5 +1,11 @@
 ## Comandos clave
 
+Verificar version de Python y Django respectivamente
+```bash
+  py --version
+  py -m django --version
+```
+
 Instalar paguetes necesarios
 
 ```bash
