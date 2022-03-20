@@ -2,30 +2,46 @@
 
 Verificar version de Python y Django respectivamente
 ```bash
-  py --version
-  py -m django --version
+py --version
+py -m django --version
 ```
 
-Instalar paguetes necesarios
-
+Crear entorno virtual.
 ```bash
-  pip install -r requirements.txt
+virtualenv venv
+source venv/bin/activate
+ ```
+
+Instalar Django / paquetes necesarios
+```bash
+pip install Django==3.1.2
+pip install -r requirements.txt
+```
+
+Crear proyecto en la misma carpeta (Para eso esta el punto final) 
+```bash
+django-admin startproject <NombreProyecto> .
+```
+Conexión con Postgresql: [Leer](https://cosasdedevs.com/posts/como-conectar-una-base-de-datos-postgresql-con-django/)
+```bash
+sudo apt install libpq-dev
+pip3 install psycopg2
 ```
 
 Ejecutar servidor
 ```bash
-  py manage.py runserver
+py manage.py runserver
 ```
 
 Migraciones
 ```bash
-  py manage.py makemigrations
-  py manage.py migrate
+py manage.py makemigrations
+py manage.py migrate
 ```
 
 Crear superusuario
 ```bash
-  py manage.py createsuperuser
+py manage.py createsuperuser
 ```
 
 ## Usuarios
