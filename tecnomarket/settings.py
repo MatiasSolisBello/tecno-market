@@ -188,14 +188,14 @@ PWA_APP_BACKGROUND = "#6699f7"
 
 PWA_APP_ICONS = [
     {
-        "src": "/static/favicon/food.png",
+        "src": "/static/favicon/favicon.png",
         "sizes": "512x512"
     }
 ]
 
 PWA_APP_ICONS_APPLE = [
     {
-        "src": "/static/favicon/food.png",
+        "src": "/static/favicon/favicon.png",
         "sizes": "512x512"
     }
 ]

@@ -2,8 +2,10 @@
 
 {% block contenido %}
 
-<h2 class="text-center">
-    No tienes internet, por favor revisa tu conexion
-</h2>
+{% load static %}
+<div class="text-center">
+    <img src="{% static 'favicon/lost.png' %}" alt="My image" style="width: 45%;"></img>
+    <h4>No tienes internet, por favor revisa tu conexion</h4>
+</div>
 
 {% endblock %}

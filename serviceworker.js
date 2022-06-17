@@ -4,7 +4,7 @@
 var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline/',
-    
+    'static/favicon/lost.png'
 ];
 
 // Cache on install
