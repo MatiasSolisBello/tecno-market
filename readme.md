@@ -43,9 +43,3 @@ Crear superusuario
 ```bash
 python manage.py createsuperuser
 ```
-
-## Usuarios
-
-* admin / admin123
-* alonso / heave-decompose  (se le asigna permiso view_producto) 
-* Auth mediante Facebook
