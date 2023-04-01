@@ -1,39 +1,45 @@
 from django.db import models
+from djchoices import ChoiceItem, DjangoChoices
+from django.utils.translation import gettext as _
 
 #-------------------------------------------------
 #           Create your models here.
 #-------------------------------------------------
-class Marca(models.Model):
-    nombre = models.CharField(max_length=200)
+class Brand(models.Model):
+    name = models.CharField(max_length=200)
 
-    def __str__(self): return self.nombre
+    def __str__(self): return self.name
 
-class Producto(models.Model):
-    nombre = models.CharField(max_length=200)
-    precio = models.IntegerField()
-    descripcion = models.TextField()
-    nuevo = models.BooleanField()
-    marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
-    fecha_fabricacion = models.DateField()
-    imagen = models.ImageField(upload_to="productos", null=True)
+class Products(models.Model):
+    name = models.CharField(max_length=200, verbose_name=_("Nombre de Producto"))
+    price = models.IntegerField(verbose_name=_("Precio"))
+    description = models.TextField(verbose_name=("Descripción"))
+    is_new = models.BooleanField(verbose_name=("Nuevo"))
+    brand = models.ForeignKey(
+        Brand, verbose_name=("Marca"), on_delete=models.PROTECT)
+    fabrication_date = models.DateField(verbose_name=_("Fecha de Fabricación"))
+    image = models.ImageField(
+        verbose_name=_("Imagen"), upload_to="products")
 
-    def __str__(self): return self.nombre
+    def __str__(self): return self.name
 
 
 # Las consultas solo acepta estas opciones
-opciones_consultas = [
-    [0, "Consulta"],
-    [1, "Reclamo"],
-    [2, "Sugerencia"],
-    [3, "Felicitaciones"]
-]
+class OptionsEnquiry(DjangoChoices):
+    CONSULTA = ChoiceItem(1, "Consulta")
+    RECLAMO = ChoiceItem(2, "Reclamo")
+    SUGERENCIA = ChoiceItem(2, "Sugerencia")
+    FELICITACIONES = ChoiceItem(2, "Felicitaciones")
 
-class Contacto(models.Model):
-    nombre = models.CharField(max_length=50)
-    correo = models.EmailField()
-    tipo_consulta = models.IntegerField(choices=opciones_consultas)
-    mensaje = models.TextField()
-    avisos = models.BooleanField()
+class Contact(models.Model):
+    name = models.CharField(max_length=50, verbose_name=("Nombre Completo"))
+    email = models.EmailField(verbose_name=("Correo"))
+    type_enquiry = models.IntegerField(
+        choices=OptionsEnquiry.choices,
+        verbose_name=("Tipo de consulta")
+    )
+    message = models.TextField(verbose_name=("Mensaje"))
+    notice = models.BooleanField(verbose_name=("Aviso"))
 
     def __str__(self):
-        return self.nombre
+        return self.name

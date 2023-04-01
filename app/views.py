@@ -1,25 +1,29 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Producto
-from .forms import ContactoForm, ProductoForm, CustomUserCreationForm
+from .models import Products
+from .forms import ContactForm, ProductsForm, CustomUserCreationForm
+from .models import Contact
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.http import Http404
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth import authenticate, login
+from django.http import Http404
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views import View
+from django.urls.base import reverse_lazy
 from rest_framework import viewsets
-from .serializers import ProductoSerializer
+from .serializers import ProductsSerializer
 
-class ProductoViewset(viewsets.ModelViewSet):
-    queryset =Producto.objects.all()  #puedo reemplazar all() por filter()
-    serializer_class = ProductoSerializer
+class ProductsViewset(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductsSerializer
 
-    # Filtrar por variable de nombre => localhost:8000/api/producto/?nombre=televisor
+    # Filtrar por variable de nombre => localhost:8000/api/products/?name=televisor
     def get_queryset(self):
-        productos = Producto.objects.all() 
-        nombre = self.request.GET.get('nombre')
-        if nombre:
-            productos = productos.filter(nombre__contains=nombre)
-        return productos
+        products = Products.objects.all() 
+        name = self.request.GET.get('name')
+        if name:
+            products = products.filter(name__contains=name)
+        return products
 
 #para mostrar solo si necesita login, sin importar permiso
 # @login_required
@@ -27,105 +31,247 @@ class ProductoViewset(viewsets.ModelViewSet):
 # --------------------------
 # Create your views here.
 #---------------------------
-def home(request):
-    productos = Producto.objects.all()
-    data = {
-        'productos': productos
-    }
-    return render(request, 'app/home.html', data)
+#def home(request):
+#    productos = Producto.objects.all()
+#    data = {
+#        'productos': productos
+#    }
+#    return render(request, 'app/home.html', data)
 
-def detalles(request, id):
-    productos = get_object_or_404(Producto, id=id)
-    data = {
-        'productos': productos
-    }
-    return render(request, 'app/producto/detalles.html', data)
 
-def contacto(request):
-    data = {
-        'form': ContactoForm()
-    }
+class HomeView(View):
+    def get(self, request):
+        products = Products.objects.all()
+        context = {'products':products}
+        return render(request, 'app/home.html', context)
+    
 
-    if request.method == 'POST':
-        formulario = ContactoForm(data = request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "Formulario recibido!!"
+#def detalles(request, id):
+#    productos = get_object_or_404(Producto, id=id)
+#    data = {
+#        'productos': productos
+#    }
+#    return render(request, 'app/producto/detalles.html', data)
+
+class DetallesView(View):
+    template_name = 'app/products/details.html'
+    
+    def get(self, request, id):
+        products = get_object_or_404(Products, id = id)
+        context = {'products':products}
+        return render(request, self.template_name, context)
+    
+
+
+#def contacto(request):
+#    data = {
+#        'form': ContactoForm()
+#    }
+#
+#    if request.method == 'POST':
+#        formulario = ContactoForm(data = request.POST)
+#        if formulario.is_valid():
+#            formulario.save()
+#            data["mensaje"] = "Formulario recibido!!"
+#        else:
+#            data["form"] = formulario
+#    return render(request, 'app/contacto.html', data)
+
+
+class ContactView(View):
+    model = Contact
+    form_class = ContactForm
+    template_name = 'app/contact.html'
+    
+    def get(self, request):
+        form = self.form_class()
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+        
+    def post(self, request):
+        data = {
+            'form': self.form_class()
+        }
+        form = self.form_class(data = request.POST)
+        if form.is_valid():
+            form.save()
+            type_msg = form.cleaned_data
+            print('  -> ', type_msg)
+            text = f'{type_msg} enviada correctamente'
+            messages.success(request, text)
         else:
-            data["form"] = formulario
-    return render(request, 'app/contacto.html', data)
+            data["form"] = form
+        return render(request, self.template_name, data)
 
-@permission_required('app.add_producto')
-def agregar(request):
-    data = {
-        'form': ProductoForm()
-    }
-    if request.method == 'POST':
-        formulario = ProductoForm(data = request.POST, files = request.FILES)
-        if formulario.is_valid():
-            formulario.save()
+
+
+#@permission_required('app.add_producto')
+#def agregar(request):
+#    data = {
+#        'form': ProductoForm()
+#    }
+#    if request.method == 'POST':
+#        formulario = ProductoForm(data = request.POST, files = request.FILES)
+#        if formulario.is_valid():
+#            formulario.save()
+#            messages.success(request, "Agregado correctamente")
+#            return redirect(to="listar")
+#        else:
+#            data["form"] = formulario
+#   return render(request, 'app/producto/agregar.html', data)
+
+#@permission_required('app.add_producto')
+class CreateProductsView(CreateView):
+    model = Products
+    form_class = ProductsForm
+    template_name = 'app/products/form.html'
+    
+    def get(self, request):
+        form = self.form_class()
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+    
+    def post(self, request):
+        data = {
+            'form': self.form_class()
+        }
+        form = self.form_class(data = request.POST, files = request.FILES)
+        if form.is_valid():
+            form.save()
             messages.success(request, "Agregado correctamente")
-            return redirect(to="listar")
+            return redirect(to="list")
         else:
-            data["form"] = formulario
+            data["form"] = form
+        
 
-    return render(request, 'app/producto/agregar.html', data)
 
-@permission_required('app.view_producto')
-def listar(request):
-    productos =Producto.objects.all()
-
+#@permission_required('app.view_producto')
+#def listar(request):
+#    productos =Producto.objects.all()
+#
     #Si page no existe en url del navegador, devuelve la pagina 1
-    page = request.GET.get('page', 1) 
+#    page = request.GET.get('page', 1) 
 
-    try:
+#    try:
         #5 productos x pagina, y los muestra segun valor de "page"
-        paginator = Paginator(productos, 5) 
-        productos = paginator.page(page)
-    except:
-        raise Http404
-    data = {
-        'entity': productos, #entity para uso de paginador
-        'paginator': paginator
-    }
-    return render(request, 'app/producto/listar.html', data)
+#        paginator = Paginator(productos, 5) 
+#        productos = paginator.page(page)
+#    except:
+#        raise Http404
+#    data = {
+#        'entity': productos, #entity para uso de paginador
+#        'paginator': paginator
+#    }
+#    return render(request, 'app/producto/listar.html', data)
 
-@permission_required('app.change_producto')
-def modificar(request, id):
-    producto = get_object_or_404(Producto, id=id)
-    data = {
-        'form': ProductoForm(instance=producto)
-    }
-    if request.method == 'POST':
-        formulario = ProductoForm(data = request.POST, instance=producto, files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
+#@permission_required('app.view_producto')
+class ListProductsView(View):
+    model = Products
+    template_name = 'app/products/list.html'
+    
+    def get(self, request):
+        products = self.model.objects.all()
+        page = request.GET.get('page', 1)
+        try:
+            #5 products x pagina, y los muestra segun valor de "page"
+            paginator = Paginator(products, 5) 
+            products = paginator.page(page)
+        except:
+            raise Http404
+        data = {
+            'entity': products, #entity para uso de paginador
+            'paginator': paginator
+        }
+        
+        return render(request, self.template_name, data)
+
+
+#@permission_required('app.change_producto')
+#def modificar(request, id):
+#    producto = get_object_or_404(Products, id=id)
+#    data = {
+#        'form': ProductsForm(instance=producto)
+#    }
+#    if request.method == 'POST':
+#        formulario = ProductsForm(data = request.POST, instance=producto, files=request.FILES)
+#        if formulario.is_valid():
+#            formulario.save()
+#            messages.success(request, "Modificado correctamente")
+#            return redirect(to="list")
+#        data["form"] = formulario
+#    return render(request, 'app/products/modificar.html', data)
+
+
+class UpdateProduct(View):
+    model = Products
+    form_class = ProductsForm
+    template_name = 'app/products/form.html'
+    success_url = reverse_lazy('app:products:list')
+    
+    def get(self, request, id):
+        products = get_object_or_404(self.model, id=id)
+        form = self.form_class(instance=products)
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+    
+    def post(self, request, id):
+        products = get_object_or_404(self.model, id=id)
+        form = self.form_class(data=request.POST, instance=products, files=request.FILES)
+        context = {'form': form}
+        if form.is_valid():
+            form.save()
             messages.success(request, "Modificado correctamente")
-            return redirect(to="listar")
-        data["form"] = formulario
-    return render(request, 'app/producto/modificar.html', data)
+            return redirect(to="list")
+        return render(request, self.template_name, context)
+    
+    
 
 @permission_required('app.delete_producto')
-def eliminar(request, id):
-    producto = get_object_or_404(Producto, id=id)
+def delete(request, id):
+    producto = get_object_or_404(Products, id=id)
     producto.delete()
     messages.warning(request, "Eliminado  correctamente")
-    return redirect(to="listar")
+    return redirect(to="list")
 
-def registro(request):
-    data = {
-        'form': CustomUserCreationForm()
-    }
-    if request.method == 'POST':
-        formulario = CustomUserCreationForm(data = request.POST)
-        if formulario.is_valid():
-            formulario.save()
+#def registro(request):
+#    data = {
+#        'form': CustomUserCreationForm()
+#    }
+#    if request.method == 'POST':
+#        formulario = CustomUserCreationForm(data = request.POST)
+#        if formulario.is_valid():
+#            formulario.save()
 
             #loguear al usuario terminado el registro
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+#            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+#            login(request, user)
+#            messages.success(request, "Registro Correcto")
+#            return redirect(to="home")
+
+#        data["form"] = formulario
+#    return render(request, 'registration/singup.html', data)
+
+class SingUpView(View):
+    model = Products
+    form_class = CustomUserCreationForm
+    template_name = 'registration/singup.html'
+    
+    def get(self, request):
+        data = {'form': self.form_class}
+        return render(request, self.template_name, data)
+    
+    def post(self, request):
+        form = self.form_class(data = request.POST)
+        if form.is_valid():
+            form.save()
+
+            #loguear al usuario terminado el registro
+            user = authenticate(
+                username = form.cleaned_data["username"], 
+                password = form.cleaned_data["password1"]
+            )
             login(request, user)
             messages.success(request, "Registro Correcto")
             return redirect(to="home")
-
-        data["form"] = formulario
-    return render(request, 'registration/registro.html', data)
+        data["form"] = form
+        return render(request, 'registration/singup.html', data)

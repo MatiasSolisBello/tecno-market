@@ -9,30 +9,25 @@
     <h2>Productos</h2>
     <br>
     <div class="row row-cols-1 row-cols-md-3">
-        {% for p in productos %}
+        {% for product in products %}
         <div class="col mb-4">
 
-            <div class="card h-100">
-                {% if p.imagen %}
-                <img class="card-img-top" src="{{ p.imagen.url }}" alt="imagen">
+            <div class="card">
+                {% if product.image %}
+                <img class="card-img-top" src="{{ product.image.url }}" alt="image">
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ p.nombre | title }}</h5>
-                    <p class="card-text">${{ p.precio | intcomma }}</p>
-                    <a href="{% url 'detalles' p.id %}" class="btn btn-warning btn-block">Ver mas</a>
+                    <h5 class="card-title">{{ product.name | title }}</h5>
+                    <p class="card-text">${{ product.price | intcomma }}</p>
+                    <a href="{% url 'details' product.id %}" class="btn btn-warning btn-block">Ver mas</a>
                 </div>
 
             </div>
-
-
         </div>
         {% empty %}
-        <p>No hay producto aun</p>
+        <p>No hay productos registrados</p>
     </div>
-    
-    
     {% endfor %}
-
-
+    </div>
     {% endblock %}
 </div>

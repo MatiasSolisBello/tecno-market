@@ -1,0 +1,92 @@
+{% extends 'app/navbar.html' %}
+
+{% block contenido %}
+
+{% load humanize %}
+
+<div class="container">
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-lg-6">
+            <h3>Lista de Productos</h3>
+        </div>
+
+        {% if perms.app.add_producto %}
+        <div class="col-lg-6">
+            <a class="btn btn-success float-right" href="{% url 'create' %}">
+                Agregar producto
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Marca</th>
+            <th>Nuevo</th>
+            <th>Fabricación</th>
+            {% if perms.app.change_producto and perms.app.delete_producto %}
+            <th>Acciones</th>
+            {% endif %}
+        </tr>
+
+        {% for p in entity %}
+        <tr>
+            <td>{{ p.name | title }}</td>
+            <td>${{ p.price | intcomma }}</td>
+            <td>{{ p.brand | title }}</td>
+            
+            <td>
+                {% if p.is_new %}
+                SI
+                {% else %}
+                NO
+                {% endif %}
+            </td>
+            <td>{{ p.fabrication_date }}</td>
+            
+                {% if perms.app.change_producto %}
+                <td>
+                    <a href="{% url 'update' p.id %}" class="btn btn-secondary btm-sm">Modificar</a>
+                
+                {% endif %}
+    
+                {% if perms.app.delete_producto %}
+                
+                    <a href="{% url 'delete' p.id %}" onclick"deleteProduct()" value="{{p.id}}" class="btn btn-danger btm-sm">Borrar</a>
+                </td>
+                {% endif %}
+            
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        {% include 'app/paginator.html' %}
+    </div>
+</div>
+
+<script>
+    
+    function deleteProduct(){
+        console.log(id)
+        /*Swal.fire({
+            "title": "¿Esta seguro?",
+            "text": "esta accion no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "CancelButtonText": "No",
+            "confirmButtonText": "Si",
+            "reverseButtons": true
+        }).then(function(result) {
+            if(result.isConfirmed) {
+                window.location.href = "/delete/"+id+"/"
+            }
+        })*/
+    }
+</script>
+
+
+{% endblock %}
