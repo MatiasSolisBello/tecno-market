@@ -44,7 +44,7 @@
             <!--Condicional para roles-->
             {% if perms.app.view_producto %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'listar' %}">Productos</a>
+              <a class="nav-link" href="{% url 'list' %}">Productos</a>
             </li>
 
             {% endif %}
@@ -66,13 +66,13 @@
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              <a class="nav-link" href="{% url 'contact' %}">Contacto</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Ingrese</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'registro' %}">Registro</a>
+              <a class="nav-link" href="{% url 'singup' %}">Registro</a>
             </li>
 
             {% endif %}
@@ -94,15 +94,15 @@
 
   <!--Si existe message, muestralos-->
   {% if messages %}
-  {% for m in messages %}
-  <script>
-    Swal.fire({
-      "title": "Felicitaciones",
-      "text": "{{m}}",
-      "icon": "success"
-    })
-  </script>
-  {% endfor %}
+    {% for m in messages %}
+    <script>
+      Swal.fire({
+        "title": "Felicitaciones",
+        "text": "{{m}}",
+        "icon": "success"
+      })
+    </script>
+    {% endfor %}
   {% endif %}
 
   <!--Booostrap-->

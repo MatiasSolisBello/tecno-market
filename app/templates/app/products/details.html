@@ -1,0 +1,43 @@
+<!--Llamamos al navbar-->
+{% extends 'app/navbar.html' %}
+
+<!--Definimos el contenido-->
+{% block contenido %}
+<div class="container">
+    {% load humanize %}
+    <br>
+    <h2>Detalles del producto</h2>
+    <div class="row mt-4">
+        <div class="col-5">
+            <img src="{{ products.image.url }}" alt="" class="img-thumbnail">
+        </div>
+        <div class="col-6">
+            <h2 class="display-4">{{ products.name }}</h2>
+            <p style="font-size: 26px;">${{ products.price | intcomma }}</p>
+            <a href="{% url 'home' %}" class="btn btn-warning">Volver atras</a>
+        </div>
+    </div>
+    <br><br>
+    <div class="sub-header">
+        <h3>Informacion</h3>
+        <br>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Descripcion</th>
+                    <td>{{ products.description }}</td>
+                </tr>
+                <tr>
+                    <th>Marca</th>
+                    <td>{{ products.brand }}</td>
+                </tr>
+                <tr>
+                    <th>Fabricacion</th>
+                    <td>{{ products.fabrication_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br><br><br>
+</div>
+{% endblock %}
