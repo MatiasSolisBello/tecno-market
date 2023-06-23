@@ -34,8 +34,8 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-SOCIAL_AUTH_FACEBOOK_KEY = "805126396850136"
-SOCIAL_AUTH_FACEBOOK_SECRET = "51e951ff64e4fb3cf852d24117168b47"
+#SOCIAL_AUTH_FACEBOOK_KEY = ""
+#SOCIAL_AUTH_FACEBOOK_SECRET = ""
 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 LOGIN_ERROR_URL = '/accounts/login/'
@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'social_django',
     'pwa',
     'django_cleanup',
+    'debug_toolbar'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -68,9 +69,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'tecnomarket.urls'
+
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
+
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel'
+]
 
 TEMPLATES = [
     {
@@ -84,21 +95,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends', 
+                'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] 
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']
 
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {  
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, name, email, picture.type(large), link'
 }
 
 
-SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [               
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('name', 'name'),
     ('email', 'email'),
     ('picture', 'picture'),
