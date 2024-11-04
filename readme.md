@@ -50,7 +50,12 @@ Crear superusuario
 python manage.py createsuperuser
 ```
 
-
+Crear archivo env dentro del folder con nombre del proyecto, para este proyecto especifico se necesita:
+```bash
+DEBUG=True
+SOCIAL_AUTH_FACEBOOK_KEY=''
+SOCIAL_AUTH_FACEBOOK_SECRET=''
+```
  
  
  
