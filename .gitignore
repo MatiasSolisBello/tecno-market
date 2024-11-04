@@ -15,3 +15,5 @@ venv
 
 # custom editor config
 .vscode/
+
+/media

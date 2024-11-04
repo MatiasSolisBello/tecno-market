@@ -51,16 +51,18 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    image = forms.ImageField(required=False, validators=[MaxSizeFileValidator(max_file_size=2)])
+    image = forms.ImageField(required=False, 
+                             validators=[MaxSizeFileValidator(max_file_size=2)],
+                             label="Imagen de producto")
 
     # nombre con minimo de caracteres
-    name = forms.CharField(min_length=3, max_length=50)
+    name = forms.CharField(min_length=3, max_length=50, label="Nombre")
 
     #precio con min. y max. de valor
-    price = forms.IntegerField(min_value=1, max_value=1500000)
+    price = forms.IntegerField(min_value=1, max_value=1500000, label="Precio")
 
     # fecha
-    fabrication_date = forms.DateField(widget=DateInput())
+    fabrication_date = forms.DateField(widget=DateInput(), label="Fecha de fabricación")
 
     # nombre no se puede repetir
     #def clean_nombre(self):
@@ -95,6 +97,8 @@ class ProductsForm(forms.ModelForm):
                 Row(
                     Column('fabrication_date', css_class='col-md-4'),
                     Column('image', css_class='col-md-6'),
+                ),
+                Row(
                     Column('is_new', css_class='col-md-2'),
                 ),
                 Row(

@@ -206,3 +206,5 @@ PWA_APP_ICONS_APPLE = [
 ]
 
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, "serviceworker.js")
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
