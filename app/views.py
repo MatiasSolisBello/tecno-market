@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Products
+from .models import ImageProduct, Products
 from .forms import ContactForm, ProductsForm, CustomUserCreationForm
 from .models import Contact
 from django.contrib import messages
@@ -58,7 +58,11 @@ class DetallesView(View):
     
     def get(self, request, id):
         products = get_object_or_404(Products, id = id)
-        context = {'products':products}
+        images = ImageProduct.objects.filter(product_id=id)
+        context = {
+            'products':products, 
+            'images': images
+        }
         return render(request, self.template_name, context)
     
 

@@ -13,8 +13,8 @@
         <div class="col mb-4">
 
             <div class="card">
-                {% if product.image %}
-                <img class="card-img-top" src="{{ product.image.url }}" alt="image">
+                {% if product.images %}
+                <img class="card-img-top" src="{{ product.images.first.image.url }}" alt="image">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name | title }}</h5>

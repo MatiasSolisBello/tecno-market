@@ -18,12 +18,16 @@ class Products(models.Model):
     brand = models.ForeignKey(
         Brand, verbose_name=("Marca"), on_delete=models.PROTECT)
     fabrication_date = models.DateField(verbose_name=_("Fecha de Fabricación"))
-    image = models.ImageField(
-        verbose_name=_("Imagen"), upload_to="products")
+    #image = models.ImageField(
+    #    verbose_name=_("Imagen"), upload_to="products")
 
     def __str__(self): return self.name
 
+class ImageProduct(models.Model):
+    image = models.ImageField(upload_to="products")
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="images")
 
+    
 # Las consultas solo acepta estas opciones
 class OptionsEnquiry(DjangoChoices):
     CONSULTA = ChoiceItem(1, "Consulta")

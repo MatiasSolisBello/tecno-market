@@ -9,7 +9,24 @@
     <h2>Detalles del producto</h2>
     <div class="row mt-4">
         <div class="col-5">
-            <img src="{{ products.image.url }}" alt="" class="img-thumbnail">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in images %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <!-- Imagen con evento de clic para pantalla completa y zoom al pasar el mouse -->
+                        <img src="{{ image.image.url }}" alt="" class="d-block w-100 img-thumbnail zoom-effect" onclick="openFullscreen(this)">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev" style="background-color: transparent; border: none;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.3);"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next" style="background-color: transparent; border: none;">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.3);"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
         <div class="col-6">
             <h2 class="display-4">{{ products.name }}</h2>
@@ -17,6 +34,7 @@
             <a href="{% url 'home' %}" class="btn btn-warning">Volver atras</a>
         </div>
     </div>
+
     <br><br>
     <div class="sub-header">
         <h3>Informacion</h3>
@@ -40,4 +58,65 @@
     </div>
     <br><br><br><br>
 </div>
+
+<!-- Modal para pantalla completa -->
+<div id="fullscreenModal" class="fullscreen-modal" onclick="closeFullscreen()">
+    <span class="close">&times;</span>
+    <img class="fullscreen-content" id="fullscreenImage">
+</div>
+
+<!-- CSS -->
+<style>
+.zoom-effect {
+    transition: transform 0.3s ease; /* Transición suave para el zoom */
+}
+
+.zoom-effect:hover {
+    transform: scale(1.1); /* Aumenta el tamaño de la imagen al pasar el mouse */
+}
+
+
+.fullscreen-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.fullscreen-content {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+</style>
+
+<!-- JavaScript -->
+<script>
+function openFullscreen(img) {
+    const modal = document.getElementById("fullscreenModal");
+    const modalImg = document.getElementById("fullscreenImage");
+    modal.style.display = "flex";
+    modalImg.src = img.src;
+}
+
+function closeFullscreen() {
+    document.getElementById("fullscreenModal").style.display = "none";
+}
+</script>
 {% endblock %}
