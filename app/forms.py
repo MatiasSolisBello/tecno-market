@@ -82,7 +82,6 @@ class ProductsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
-        print(self.instance.id)
         self.helper.include_media = False
         self.helper.layout = Layout(
             Div(

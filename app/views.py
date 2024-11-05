@@ -211,7 +211,7 @@ class UpdateProduct(View):
     def get(self, request, id):
         products = get_object_or_404(self.model, id=id)
         form = self.form_class(instance=products)
-        ctx = {'form': form}
+        ctx = {'form': form, 'instance': products}
         return render(request, self.template_name, ctx)
     
     def post(self, request, id):
@@ -261,6 +261,7 @@ class SingUpView(View):
         return render(request, self.template_name, data)
     
     def post(self, request):
+        data = {'form': self.form_class}
         form = self.form_class(data = request.POST)
         if form.is_valid():
             form.save()
