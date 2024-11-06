@@ -1,11 +1,11 @@
 from django import forms
-from .models import Contact, Products
+from .models import Contact, ImageProduct, Products
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Div, Field, Layout, Row, Submit
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
-from django.forms import ValidationError
+from django.forms import ValidationError, inlineformset_factory
 
 #
 from functools import partial
@@ -51,9 +51,9 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    image = forms.ImageField(required=False, 
-                             validators=[MaxSizeFileValidator(max_file_size=2)],
-                             label="Imagen de producto")
+    #image = forms.ImageField(required=False, 
+    #                         validators=[MaxSizeFileValidator(max_file_size=2)],
+    #                         label="Imagen de producto")
 
     # nombre con minimo de caracteres
     name = forms.CharField(min_length=3, max_length=50, label="Nombre")
@@ -87,15 +87,12 @@ class ProductsForm(forms.ModelForm):
             Div(
                 Row(
                     Column('name', css_class='col-md-4'),
-                    Column('price', css_class='col-md-4'),
-                    Column('brand', css_class='col-md-4')
+                    Column('price', css_class='col-md-3'),
+                    Column('brand', css_class='col-md-2'),
+                    Column('fabrication_date', css_class='col-md-3')
                 ),
                 Row(
                     Column('description', css_class='col-md-12'),
-                ),
-                Row(
-                    Column('fabrication_date', css_class='col-md-4'),
-                    Column('image', css_class='col-md-6'),
                 ),
                 Row(
                     Column('is_new', css_class='col-md-2'),
@@ -110,7 +107,16 @@ class ProductsForm(forms.ModelForm):
             )
         )
         
+class ImageProductForm(forms.ModelForm):
+    class Meta:
+        model = ImageProduct
+        fields = ['image']
         
+# Crea el formset para manejar las imágenes relacionadas
+ImageProductFormSet = inlineformset_factory(
+    Products, ImageProduct, form=ImageProductForm, extra=1, can_delete=True
+)
+
 class CustomUserCreationForm(UserCreationForm):
     
     #personalizar formulario de registro

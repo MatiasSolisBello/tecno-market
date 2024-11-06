@@ -1,6 +1,6 @@
 from django.urls import path, include
-from .views import (HomeView, ContactView, CreateProductsView, ListProductsView, 
-                    DetallesView, UpdateProduct, 
+from .views import (HomeView, ContactView, CreateProductsView, 
+                    DetallesView, ListProductsView, UpdateProduct, 
                     delete, SingUpView, ProductsViewset)
 from rest_framework import routers
 

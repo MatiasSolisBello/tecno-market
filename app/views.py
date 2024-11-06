@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import ImageProduct, Products
-from .forms import ContactForm, ProductsForm, CustomUserCreationForm
+from .forms import ContactForm, ProductsForm, CustomUserCreationForm, ImageProductFormSet
 from .models import Contact
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -132,20 +132,29 @@ class CreateProductsView(CreateView):
     
     def get(self, request):
         form = self.form_class()
-        ctx = {'form': form}
+        formset = ImageProductFormSet()
+        ctx = {'form': form, 'formset': formset}
+        print('ctx: ', ctx)
         return render(request, self.template_name, ctx)
     
-    def post(self, request):
-        data = {
-            'form': self.form_class()
-        }
-        form = self.form_class(data = request.POST, files = request.FILES)
-        if form.is_valid():
-            form.save()
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST, files=request.FILES)
+        formset = ImageProductFormSet(request.POST, request.FILES)
+        print('request.POST: ', request.POST)
+
+        if form.is_valid() and formset.is_valid():
+            product = form.save()
+            for image_form in formset:
+                image = image_form.save(commit=False)
+                image.product = product
+                image.save()
             messages.success(request, "Agregado correctamente")
-            return redirect(to="list")
+            return redirect('list')
         else:
-            data["form"] = form
+            print('Form errors:', form.errors)
+            print('Formset errors:', formset.errors)
+            ctx = {'form': form, 'formset': formset}
+            return render(request, self.template_name, ctx)
         
 
 
@@ -210,23 +219,31 @@ class UpdateProduct(View):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
-    success_url = reverse_lazy('app:products:list')
     
     def get(self, request, id):
-        products = get_object_or_404(self.model, id=id)
-        form = self.form_class(instance=products)
-        ctx = {'form': form, 'instance': products}
+        product = get_object_or_404(self.model, id=id)
+        form = self.form_class(instance=product)
+        formset = ImageProductFormSet(instance=product)
+        ctx = {'form': form, 'formset': formset, 'instance': product}
         return render(request, self.template_name, ctx)
     
     def post(self, request, id):
-        products = get_object_or_404(self.model, id=id)
-        form = self.form_class(data=request.POST, instance=products, files=request.FILES)
-        context = {'form': form}
-        if form.is_valid():
+        product = get_object_or_404(self.model, id=id)
+        form = self.form_class(data=request.POST, instance=product, files=request.FILES)
+        formset = ImageProductFormSet(request.POST, request.FILES, instance=product)
+
+        print('form: ', form.is_valid())
+        print('formset: ', formset.is_valid())
+
+        if form.is_valid() and formset.is_valid():
             form.save()
+            formset.save()
             messages.success(request, "Modificado correctamente")
-            return redirect(to="list")
-        return render(request, self.template_name, context)
+            return redirect('list')
+        
+        ctx = {'form': form, 'formset': formset}
+        return render(request, self.template_name, ctx)
+
     
     
 

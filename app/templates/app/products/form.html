@@ -16,9 +16,104 @@
         </div>
 
         <div class="card-body w-100" >
-            {% crispy form %}
+            <form method="post" enctype="multipart/form-data">
+                {% crispy form %}
+            
+                <h3>Imágenes del Producto</h3>
+                {{ formset.management_form }}
+            
+                <div id="formset-container">
+                    {% for form in formset %}
+                        <div class="formset-item border p-2 mb-2">
+                            <div class="d-flex align-items-center">
+                                {% if form.instance.pk %}
+                                    <!-- Imagen de previsualización -->
+                                    <div class="mr-3">
+                                        <img src="{{ form.instance.image.url }}" alt="Imagen actual" class="img-thumbnail" style="max-width: 150px;">
+                                    </div>
+                                {% endif %}
+            
+                                <!-- Campo de carga de imagen y botón de eliminación alineados horizontalmente -->
+                                <div class="d-flex align-items-center">
+                                    <div class="form-group mb-0 mr-3">
+                                        {{ form.image.label_tag }} {{ form.image }}
+                                    </div>
+                                    <!-- Botón de eliminar con icono de basurero -->
+                                    <button type="button" class="btn btn-link text-danger remove-form" style="font-size: 1.2em;">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Contenedor para centrar el botón "Agregar imagen" y alinear el botón "Guardar" a la derecha -->
+                <div class="d-flex justify-content-between mt-3">
+                    <!-- Botón para agregar una nueva imagen, centrado en el contenedor -->
+                    <button type="button" class="btn btn-primary mx-auto" id="add-form">
+                        <i class="fas fa-plus"></i> Agregar imagen
+                    </button>
+                    
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formsetContainer = document.getElementById("formset-container");
+        const addFormButton = document.getElementById("add-form");
+        let formCount = {{ formset.total_form_count }};
+
+        // Función para crear un nuevo formulario con el diseño de iconos
+        function addForm() {
+            const emptyForm = document.createElement("div");
+            emptyForm.classList.add("formset-item", "border", "p-2", "mb-2");
+
+            emptyForm.innerHTML = `{{ formset.empty_form.as_p|escapejs }}`.replace(/__prefix__/g, formCount);
+
+            // Añadir la estructura de icono de eliminación
+            const formImageGroup = document.createElement("div");
+            formImageGroup.classList.add("d-flex", "align-items-center");
+
+            // Imagen de carga de archivo
+            formImageGroup.innerHTML = `
+                <div class="form-group mb-0 mr-3">
+                    ${emptyForm.querySelector("label").outerHTML} ${emptyForm.querySelector("input[type='file']").outerHTML}
+                </div>
+                <button type="button" class="btn btn-link text-danger remove-form" style="font-size: 1.2em;">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            `;
+
+            emptyForm.innerHTML = "";  // Limpiar el contenido de emptyForm
+            emptyForm.appendChild(formImageGroup);  // Añadir el nuevo grupo
+
+            // Añadir evento de eliminar
+            formImageGroup.querySelector(".remove-form").addEventListener("click", function () {
+                emptyForm.remove();
+                formCount -= 1;
+                document.getElementById("id_form-TOTAL_FORMS").value = formCount;
+            });
+
+            formsetContainer.appendChild(emptyForm);
+            formCount += 1;
+            document.getElementById("id_form-TOTAL_FORMS").value = formCount;
+        }
+
+        // Evento para añadir formulario
+        addFormButton.addEventListener("click", addForm);
+
+        // Evento para eliminar formularios ya presentes
+        document.querySelectorAll(".remove-form").forEach(button => {
+            button.addEventListener("click", function () {
+                button.closest(".formset-item").remove();
+                formCount -= 1;
+                document.getElementById("id_form-TOTAL_FORMS").value = formCount;
+            });
+        });
+    });
+</script>
 
 {% endblock %}
