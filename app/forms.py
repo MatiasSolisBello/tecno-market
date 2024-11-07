@@ -97,13 +97,13 @@ class ProductsForm(forms.ModelForm):
                 Row(
                     Column('is_new', css_class='col-md-2'),
                 ),
-                Row(
-                    Submit(
-                        'submit', "Enviar",
-                        css_class='btn btn-success btn-lg float-right'
-                    ),
-                    css_class="d-flex justify-content-end"
-                )
+                #Row(
+                #    Submit(
+                #        'submit', "Enviar",
+                #        css_class='btn btn-success btn-lg float-right'
+                #    ),
+                #    css_class="d-flex justify-content-end"
+                #)
             )
         )
         

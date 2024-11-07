@@ -1,3 +1,4 @@
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.urls import path, include
 from .views import (HomeView, ContactView, CreateProductsView, 
                     DetallesView, ListProductsView, UpdateProduct, 
@@ -19,6 +20,4 @@ urlpatterns = [
     path('delete/<int:id>/', delete, name="delete"),
     path('singup/', SingUpView.as_view(), name="singup"),
     path('api/', include(router.urls)),
-
-
-]
+] + debug_toolbar_urls()

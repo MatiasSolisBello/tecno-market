@@ -29,7 +29,8 @@
                                 {% if form.instance.pk %}
                                     <!-- Imagen de previsualización -->
                                     <div class="mr-3">
-                                        <img src="{{ form.instance.image.url }}" alt="Imagen actual" class="img-thumbnail" style="max-width: 150px;">
+                                        <img src="{{ form.instance.image.url }}" alt="Imagen actual" class="img-thumbnail" 
+                                        ="max-width: 150px;">
                                     </div>
                                 {% endif %}
             
@@ -53,8 +54,8 @@
                     <button type="button" class="btn btn-primary mx-auto" id="add-form">
                         <i class="fas fa-plus"></i> Agregar imagen
                     </button>
-                    
                 </div>
+                <button type="submit" class="btn btn-success">Guardar</button>
             </form>
         </div>
     </div>

@@ -215,7 +215,7 @@ class ListProductsView(View):
 #    return render(request, 'app/products/modificar.html', data)
 
 
-class UpdateProduct(View):
+class UpdateProduct(UpdateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
