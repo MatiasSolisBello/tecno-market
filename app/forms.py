@@ -112,6 +112,14 @@ class ImageProductForm(forms.ModelForm):
         model = ImageProduct
         fields = ['image']
         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        non_required_fields = ['image']
+
+        for field in non_required_fields:
+            self.fields[field].required = False
+        
 # Crea el formset para manejar las imágenes relacionadas
 ImageProductFormSet = inlineformset_factory(
     Products, ImageProduct, form=ImageProductForm, extra=1, can_delete=True

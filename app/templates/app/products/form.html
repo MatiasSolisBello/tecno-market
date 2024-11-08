@@ -30,7 +30,7 @@
                                     <!-- Imagen de previsualización -->
                                     <div class="mr-3">
                                         <img src="{{ form.instance.image.url }}" alt="Imagen actual" class="img-thumbnail" 
-                                        ="max-width: 150px;">
+                                        style="max-width: 150px;">
                                     </div>
                                 {% endif %}
             
@@ -60,7 +60,7 @@
         </div>
     </div>
 </div>
-
+{% endblock contenido %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const formsetContainer = document.getElementById("formset-container");
@@ -116,5 +116,3 @@
         });
     });
 </script>
-
-{% endblock %}

@@ -1,6 +1,6 @@
-django == 3.1.2
+django==3.1.2
 pillow
-django-crispy-forms== 1.13.0
+django-crispy-forms==1.13.0
 django-rest-framework
 social-auth-app-django
 django-pwa
@@ -8,3 +8,4 @@ django-cleanup
 python-jose >= 3.0.0
 django-environ==0.8.1
 django-choices==1.7.1
+django-debug-toolbar
