@@ -51,9 +51,11 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    #image = forms.ImageField(required=False, 
-    #                         validators=[MaxSizeFileValidator(max_file_size=2)],
-    #                         label="Imagen de producto")
+    image = forms.ImageField(required=False, 
+                             validators=[MaxSizeFileValidator(max_file_size=2)],
+                             label="Imagen de producto",
+                             widget=forms.ClearableFileInput(attrs={'multiple': True})
+                            )
 
     # nombre con minimo de caracteres
     name = forms.CharField(min_length=3, max_length=50, label="Nombre")
@@ -82,6 +84,9 @@ class ProductsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
+        if self.instance.pk:
+            images = ImageProduct.objects.filter(product=self.instance.pk)
+            self.fields['image'].initial= images
         self.helper.include_media = False
         self.helper.layout = Layout(
             Div(
@@ -95,36 +100,20 @@ class ProductsForm(forms.ModelForm):
                     Column('description', css_class='col-md-12'),
                 ),
                 Row(
+                    Column('image', css_class='col-md-6'),
                     Column('is_new', css_class='col-md-2'),
                 ),
-                #Row(
-                #    Submit(
-                #        'submit', "Enviar",
-                #        css_class='btn btn-success btn-lg float-right'
-                #    ),
-                #    css_class="d-flex justify-content-end"
-                #)
+                Row(
+                    Submit(
+                        'submit', "Enviar",
+                        css_class='btn btn-success btn-lg float-right'
+                    ),
+                    css_class="d-flex justify-content-end"
+                )
+                
             )
         )
         
-class ImageProductForm(forms.ModelForm):
-    class Meta:
-        model = ImageProduct
-        fields = ['image']
-        
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        non_required_fields = ['image']
-
-        for field in non_required_fields:
-            self.fields[field].required = False
-        
-# Crea el formset para manejar las imágenes relacionadas
-ImageProductFormSet = inlineformset_factory(
-    Products, ImageProduct, form=ImageProductForm, extra=1, can_delete=True
-)
-
 class CustomUserCreationForm(UserCreationForm):
     
     #personalizar formulario de registro
