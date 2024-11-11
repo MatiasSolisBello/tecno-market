@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from djchoices import ChoiceItem, DjangoChoices
 from django.utils.translation import gettext as _
@@ -27,7 +28,24 @@ class ImageProduct(models.Model):
     image = models.ImageField(upload_to="products")
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="images")
 
+class Comment(models.Model):
+    """
+    Comentarios
+    """
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=200, verbose_name=_("Tu nombre"), blank=True, null=True)
     
+    title = models.CharField(max_length=50, verbose_name=("Titulo de comentario"))
+    text = models.TextField(verbose_name=("Comentario"))
+    
+    rating = models.PositiveSmallIntegerField(default=0)  # Campo de calificación de 1 a 5
+    timestamp = models.DateTimeField(auto_now_add=True)
+    likes = models.PositiveSmallIntegerField(default=0)
+    
+    def __str__(self):
+        return self.title
+
 # Las consultas solo acepta estas opciones
 class OptionsEnquiry(DjangoChoices):
     CONSULTA = ChoiceItem(1, "Consulta")

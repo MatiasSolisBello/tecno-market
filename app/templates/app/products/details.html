@@ -2,6 +2,8 @@
 {% extends 'app/navbar.html' %}
 
 <!--Definimos el contenido-->
+{% load crispy_forms_tags %}
+
 {% block contenido %}
 <div class="container">
     {% load humanize %}
@@ -56,7 +58,37 @@
             </tbody>
         </table>
     </div>
-    <br><br><br><br>
+    
+    <!--Comentarios-->
+    <div class="row" style="padding-bottom: 10px; padding-top: 20px;">
+        <div class="col-lg-6">
+            <h3>Comentarios</h3>
+        </div>
+        <div class="col-lg-6">
+            <a id="show-form-btn" class="btn btn-success float-right">
+                Agregar comentario
+            </a>
+        </div>
+    </div>
+    
+    <div id="comment-form" class="card-body w-100" style="display: none;">
+        <form method="post">
+            {% crispy form %}
+        </form>
+    </div>
+
+    {% for comment in comments %}
+        <div id="comment-list" class="card-group">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ comment.title }}</h5>
+                <p class="card-text">{{ comment.text }}</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
 </div>
 
 <!-- Modal para pantalla completa -->
@@ -118,5 +150,15 @@ function openFullscreen(img) {
 function closeFullscreen() {
     document.getElementById("fullscreenModal").style.display = "none";
 }
+
+document.getElementById("show-form-btn").addEventListener("click", function() {
+    // Muestra el formulario de comentarios
+    document.getElementById("comment-form").style.display = "block";
+    
+    // Desplazamiento suave hacia el formulario
+    document.getElementById("comment-form").scrollIntoView({
+        behavior: "smooth"
+    });
+});
 </script>
 {% endblock %}

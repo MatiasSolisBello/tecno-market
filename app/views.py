@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ImageProduct, Products
-from .forms import ContactForm, ProductsForm, CustomUserCreationForm
-from .models import Contact
+from .models import ImageProduct, Products, Contact, Comment
+from .forms import CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login
 from django.http import Http404
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views import View
 from django.urls.base import reverse_lazy
 from rest_framework import viewsets
@@ -32,14 +31,21 @@ class HomeView(View):
         return render(request, 'app/home.html', context)
 
 class DetallesView(View):
+    model = Comment
     template_name = 'app/products/details.html'
+    form_class = CommentForm
     
     def get(self, request, id):
         products = get_object_or_404(Products, id = id)
         images = ImageProduct.objects.filter(product_id=id)
+        comments = Comment.objects.filter(product_id=id)
+        form = self.form_class()
+        print(comments)
         context = {
             'products':products, 
-            'images': images
+            'images': images,
+            'comments': comments,
+            'form': form
         }
         return render(request, self.template_name, context)
     
@@ -76,6 +82,7 @@ class CreateProductsView(CreateView):
     def get(self, request):
         form = self.form_class()
         ctx = {'form': form }
+        print(ctx)
         return render(request, self.template_name, ctx)
     
     def post(self, request, *args, **kwargs):
@@ -181,3 +188,11 @@ class SingUpView(View):
             return redirect(to="home")
         data["form"] = form
         return render(request, 'registration/singup.html', data)
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Agregado correctamente")
+            return redirect('list')
+        else:
+            ctx = {'form': form }
+            return render(request, self.template_name, ctx)

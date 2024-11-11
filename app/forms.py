@@ -1,16 +1,13 @@
 from django import forms
-from .models import Contact, ImageProduct, Products
+from .models import Contact, ImageProduct, Products, Comment
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import HTML, Column, Div, Field, Layout, Row, Submit
+from crispy_forms.layout import Column, Div, Layout, Row, Submit
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
-from django.forms import ValidationError, inlineformset_factory
 
-#
 from functools import partial
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
-
 
 
 class ContactForm(forms.ModelForm):
@@ -122,3 +119,38 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
+        
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'title', 'text', 'rating']
+        widgets = {
+            # Limita a 1-5 en el formulario
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-parsley'
+        self.helper.include_media = False
+        self.helper.layout = Layout(
+            Div(
+                Row(
+                    Column('name', css_class='col-md-4'),
+                    Column('title', css_class='col-md-4'),
+                    Column('rating', css_class='col-md-4'),
+                ),
+                Row(
+                    Column('text', css_class='col-md-12'),
+                ),
+                Row(
+                    Submit(
+                        'submit', "Enviar",
+                        css_class='btn btn-success btn-lg float-right'
+                    ),
+                    css_class="d-flex justify-content-end"
+                )
+            )
+        )
