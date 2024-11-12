@@ -1,6 +1,7 @@
 <!--Llamamos al navbar-->
 {% extends 'app/navbar.html' %}
 
+{% load static %}
 {% block contenido %}
 
 {% load crispy_forms_tags %}
@@ -22,4 +23,59 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para crear una marca -->
+<div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="brandModalLabel">Crear Marca</h5>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    x
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="brand-form">
+                    {% csrf_token %}
+                    {{ brand_form|crispy }}
+                    <button type="button" class="btn btn-success" id="save-brand">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} <script src="{% static 'js/create_brand.js' %}"></script> {% endcomment %}
+<script>
+
+    document.getElementById('save-brand').addEventListener('click', function () {
+        const form = document.getElementById('brand-form');
+        const formData = new FormData(form);
+        console.log('formData: ', formData);
+
+    
+        fetch("{% url 'brand-create' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.errors) {
+                // Manejar errores
+                console.log(data.errors);
+            } else {
+                // Agregar la nueva marca a la lista de selección
+                const brandSelect = document.getElementById('id_brand');  // Asumiendo que el campo es 'id_brand'
+                const option = new Option(data.name, data.id, true, true);
+                brandSelect.add(option, undefined);
+                // Cerrar el modal
+                document.querySelector('#brandModal .btn-close').click();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
 {% endblock contenido %}

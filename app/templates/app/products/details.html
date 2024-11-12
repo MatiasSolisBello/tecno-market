@@ -31,8 +31,8 @@
             </div>
         </div>
         <div class="col-6">
-            <h2 class="display-4">{{ products.name }}</h2>
-            <p style="font-size: 26px;">${{ products.price | intcomma }}</p>
+            <h2 class="display-4">{{ product.name }}</h2>
+            <p style="font-size: 26px;">${{ product.price | intcomma }}</p>
             <a href="{% url 'home' %}" class="btn btn-warning">Volver atras</a>
         </div>
     </div>
@@ -45,15 +45,15 @@
             <tbody>
                 <tr>
                     <th>Descripcion</th>
-                    <td>{{ products.description }}</td>
+                    <td>{{ product.description }}</td>
                 </tr>
                 <tr>
                     <th>Marca</th>
-                    <td>{{ products.brand }}</td>
+                    <td>{{ product.brand }}</td>
                 </tr>
                 <tr>
                     <th>Fabricacion</th>
-                    <td>{{ products.fabrication_date }}</td>
+                    <td>{{ product.fabrication_date }}</td>
                 </tr>
             </tbody>
         </table>

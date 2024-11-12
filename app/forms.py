@@ -1,7 +1,7 @@
 from django import forms
-from .models import Contact, ImageProduct, Products, Comment
+from .models import Brand, Contact, ImageProduct, Products, Comment
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Div, Layout, Row, Submit
+from crispy_forms.layout import Column, Div, Layout, Row, Submit, HTML, Field
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .validators import MaxSizeFileValidator
@@ -86,30 +86,42 @@ class ProductsForm(forms.ModelForm):
             self.fields['image'].initial= images
         self.helper.include_media = False
         self.helper.layout = Layout(
-            Div(
-                Row(
-                    Column('name', css_class='col-md-4'),
-                    Column('price', css_class='col-md-3'),
-                    Column('brand', css_class='col-md-2'),
-                    Column('fabrication_date', css_class='col-md-3')
-                ),
-                Row(
-                    Column('description', css_class='col-md-12'),
-                ),
-                Row(
-                    Column('image', css_class='col-md-6'),
-                    Column('is_new', css_class='col-md-2'),
-                ),
-                Row(
-                    Submit(
-                        'submit', "Enviar",
-                        css_class='btn btn-success btn-lg float-right'
+        Div(
+            Row(
+                Column('name', css_class='col-md-4'),
+                Column('price', css_class='col-md-3'),
+                Column(
+                    Div(
+                        'brand',
+                        HTML("""
+                            <button type="button" class="btn btn-sm btn-outline-success ms-2"
+                                data-bs-toggle="modal" data-bs-target="#brandModal">
+                                +
+                            </button>
+                        """),
+                        css_class="d-flex align-items-center"
                     ),
-                    css_class="d-flex justify-content-end"
-                )
-                
+                    css_class='col-md-2'
+                ),
+                Column('fabrication_date', css_class='col-md-3')
+            ),
+            Row(
+                Column('description', css_class='col-md-12'),
+            ),
+            Row(
+                Column('image', css_class='col-md-6'),
+                Column('is_new', css_class='col-md-2'),
+            ),
+            Row(
+                Submit(
+                    'submit', "Enviar",
+                    css_class='btn btn-success btn-lg float-right'
+                ),
+                css_class="d-flex justify-content-end"
             )
         )
+    )
+
         
 class CustomUserCreationForm(UserCreationForm):
     
@@ -124,14 +136,19 @@ class CustomUserCreationForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name', 'title', 'text', 'rating']
+        fields = ['product', 'name', 'title', 'text', 'rating']
         widgets = {
             # Limita a 1-5 en el formulario
             'rating': forms.NumberInput(attrs={'min': 1, 'max': 5}),
+            'product': forms.HiddenInput(),
         }
     
     def __init__(self, *args, **kwargs):
+        product = kwargs.pop('product', None)
         super().__init__(*args, **kwargs)
+
+        if product:
+            self.fields['product'].initial = product
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
         self.helper.include_media = False
@@ -141,6 +158,7 @@ class CommentForm(forms.ModelForm):
                     Column('name', css_class='col-md-4'),
                     Column('title', css_class='col-md-4'),
                     Column('rating', css_class='col-md-4'),
+                    Field('product'),
                 ),
                 Row(
                     Column('text', css_class='col-md-12'),
@@ -154,3 +172,9 @@ class CommentForm(forms.ModelForm):
                 )
             )
         )
+        
+        
+class BrandForm(forms.ModelForm):
+    class Meta:
+        model = Brand
+        fields = ['name']

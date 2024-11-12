@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import ImageProduct, Products, Contact, Comment
-from .forms import CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
+from .models import Brand, ImageProduct, Products, Contact, Comment
+from .forms import BrandForm, CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login
 from django.http import Http404
+from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views import View
 from django.urls.base import reverse_lazy
@@ -36,18 +37,30 @@ class DetallesView(View):
     form_class = CommentForm
     
     def get(self, request, id):
-        products = get_object_or_404(Products, id = id)
+        product = get_object_or_404(Products, id = id)
         images = ImageProduct.objects.filter(product_id=id)
         comments = Comment.objects.filter(product_id=id)
-        form = self.form_class()
-        print(comments)
+        form = self.form_class(product=product)
         context = {
-            'products':products, 
+            'product':product, 
             'images': images,
             'comments': comments,
             'form': form
         }
         return render(request, self.template_name, context)
+    
+    def post(self, request, id):
+        data = {
+            'form': self.form_class()
+        }
+        form = self.form_class(data = request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comentario enviado correctamente")
+        else:
+            data["form"] = form
+        return redirect(request.META['HTTP_REFERER'])
+        
     
 class ContactView(View):
     model = Contact
@@ -81,7 +94,7 @@ class CreateProductsView(CreateView):
     
     def get(self, request):
         form = self.form_class()
-        ctx = {'form': form }
+        ctx = {'form': form, 'brand_form': BrandForm }
         print(ctx)
         return render(request, self.template_name, ctx)
     
@@ -196,3 +209,15 @@ class SingUpView(View):
         else:
             ctx = {'form': form }
             return render(request, self.template_name, ctx)
+        
+
+class BrandCreateView(CreateView):
+    model = Brand
+    form_class = BrandForm
+
+    def form_valid(self, form):
+        brand = form.save()
+        return JsonResponse({'id': brand.id, 'name': brand.name}, status=201)
+
+    def form_invalid(self, form):
+        return JsonResponse({'errors': form.errors}, status=400)

@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 #           Create your models here.
 #-------------------------------------------------
 class Brand(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200,  verbose_name=_("Nombre de marca"))
 
     def __str__(self): return self.name
 
