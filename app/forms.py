@@ -139,7 +139,7 @@ class CommentForm(forms.ModelForm):
         fields = ['product', 'name', 'title', 'text', 'rating']
         widgets = {
             # Limita a 1-5 en el formulario
-            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5}),
+            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5, 'readonly': True}),
             'product': forms.HiddenInput(),
         }
     

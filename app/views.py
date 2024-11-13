@@ -45,7 +45,8 @@ class DetallesView(View):
             'product':product, 
             'images': images,
             'comments': comments,
-            'form': form
+            'form': form,
+            'range': range(5)
         }
         return render(request, self.template_name, context)
     
@@ -55,6 +56,7 @@ class DetallesView(View):
         }
         form = self.form_class(data = request.POST)
         if form.is_valid():
+            print('CD: ', form.cleaned_data)
             form.save()
             messages.success(request, "Comentario enviado correctamente")
         else:
