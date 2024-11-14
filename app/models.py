@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.timesince import timesince
 from djchoices import ChoiceItem, DjangoChoices
 from django.utils.translation import gettext as _
 
@@ -45,6 +46,10 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def days_since(self):
+        delta = timesince(self.timestamp)
+        return delta.split(",")[0]
 
 # Las consultas solo acepta estas opciones
 class OptionsEnquiry(DjangoChoices):

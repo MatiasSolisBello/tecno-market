@@ -2,9 +2,9 @@
 {% extends 'app/navbar.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 {% block contenido %}
 
-{% load crispy_forms_tags %}
 <br>
 <div class="container">
     <div class="card shadow align-items-center">
@@ -45,7 +45,6 @@
     </div>
 </div>
 
-{% comment %} <script src="{% static 'js/create_brand.js' %}"></script> {% endcomment %}
 <script>
 
     document.getElementById('save-brand').addEventListener('click', function () {

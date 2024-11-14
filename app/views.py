@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login
+from django.db.models import Count, Avg
 from django.http import Http404
 from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
@@ -41,12 +42,31 @@ class DetallesView(View):
         images = ImageProduct.objects.filter(product_id=id)
         comments = Comment.objects.filter(product_id=id)
         form = self.form_class(product=product)
+        
+        # Calcular el promedio de calificación
+        avg_rating = comments.aggregate(Avg('rating'))['rating__avg'] or 0
+         # Calcular la cantidad de cada calificación (1 a 5)
+        ratings_count = comments.values('rating').annotate(count=Count('rating'))
+        rating_distribution = {i: 0 for i in range(1, 6)}
+        total_comments = comments.count()
+
+        for item in ratings_count:
+            rating_distribution[item['rating']] = item['count']
+
+        # Calcular el porcentaje para cada calificación
+        rating_percentage = {
+            k: (v / total_comments * 100) if total_comments > 0 else 0
+            for k, v in rating_distribution.items()
+        }
+        
         context = {
             'product':product, 
             'images': images,
             'comments': comments,
             'form': form,
-            'range': range(5)
+            'range': range(5),
+            'avg_rating': round(avg_rating),
+            'rating_percentage': rating_percentage
         }
         return render(request, self.template_name, context)
     

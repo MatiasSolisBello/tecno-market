@@ -85,27 +85,70 @@
             {% crispy form %}
         </form>
     </div>
-
-    {% for comment in comments %}
-    <div id="comment-list" class="card-group">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ comment.title }}</h5>
-                <p class="card-text">{{ comment.text }}</p>
-                
-                <!-- Mostrar estrellas según el rating -->
-                <p class="card-text">
-                    {% for i in range %}
-                        <i class="fas fa-star{% if i >= comment.rating %}-o{% endif %}"></i>
-                    {% endfor %}
-                </p>
-
-                <p class="card-text"><small class="text-muted">{{ comment.timestamp }}</small></p>
+    <br>
+    
+    <div class="row rating-distribution align-items-center">
+        <!-- Sección del promedio de calificación -->
+        <div class="col-md-4 text-center">
+            <h1 class="display-1 mb-0">{{ avg_rating|floatformat:1 }}</h1>
+            <h4 class="text-muted">de 5</h4>
+            <div class="star-rating-reading">
+                {% for i in range %}
+                    <i class="fas {% if i < avg_rating %}fa-star{% elif i < avg_rating %}fa-star-half-alt{% else %}fa-star-o{% endif %}"></i>
+                {% endfor %}
             </div>
         </div>
+    
+        <!-- Sección de distribución de calificaciones -->
+        <div class="col-md-6">
+            <h5 class="font-weight-bold mb-3">Distribución de calificaciones</h5>
+            {% for star, percentage in rating_percentage.items %}
+                <div class="rating-bar d-flex align-items-center">
+                    <span class="text-muted">{{ star }} estrellas</span>
+                    <div class="bar flex-grow-1 mx-2">
+                        <div class="fill" style="width: {{ percentage }}%;"></div>
+                    </div>
+                    <span class="text-muted">{{ percentage|floatformat:1 }}%</span>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
 
+    {% if not comments %}
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="text-center">No hay comentarios</h5>
+        </div>
+    </div>
+    <br>
+    {% endif %}
+
+    <br>
+    <div class="card-deck">
+        {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h5>{{ comment.title }}</h5>
+                        <p>por {{ comment.name }} hace {{ comment.days_since }}</p>
+                    </div>
+                    <div class="col-lg-5">
+                        <p class="float-right">
+                            {% for i in range %}
+                                <i class="fas fa-star{% if i >= comment.rating %}-o{% endif %}"></i>
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <p class="card-text">{{ comment.text }}</p>   
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <br>
 </div>
 
 <!-- Modal para pantalla completa -->
@@ -116,6 +159,27 @@
 
 <!-- CSS -->
 <style>
+    .star-rating i {
+        color: gold;
+    }
+    .star-rating-reading i{
+        color: gold;
+    }
+    .rating-bar {
+        margin: 0.4rem 0;
+    }
+    .rating-bar .bar {
+        background-color: #e0e0e0;
+        height: 10px;
+        border-radius: 5px;
+        position: relative;
+    }
+    .rating-bar .fill {
+        background-color: gold;
+        height: 100%;
+        border-radius: 5px;
+    }
+
 .zoom-effect {
     transition: transform 0.3s ease; /* Transición suave para el zoom */
 }
