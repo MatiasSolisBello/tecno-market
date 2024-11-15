@@ -1,0 +1,68 @@
+.star-rating i {
+    color: gold;
+}
+
+.star-rating-reading i {
+    color: gold;
+}
+
+.rating-bar {
+    margin: 0.4rem 0;
+}
+
+.rating-bar .bar {
+    background-color: #e0e0e0;
+    height: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.rating-bar .fill {
+    height: 100%;
+    border-radius: 5px;
+}
+
+.zoom-effect {
+    transition: transform 0.3s ease;
+    /* Transición suave para el zoom */
+}
+
+.zoom-effect:hover {
+    transform: scale(1.1);
+    /* Aumenta el tamaño de la imagen al pasar el mouse */
+}
+
+.fullscreen-modal {
+    display: none;
+    /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.fullscreen-content {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.star-rating i {
+    cursor: pointer;
+    color: gold;
+    font-size: 1.5rem;
+}

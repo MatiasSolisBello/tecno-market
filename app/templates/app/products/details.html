@@ -5,6 +5,7 @@
 
 
 <!--Definimos el contenido-->
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block contenido %}
@@ -103,13 +104,23 @@
         <div class="col-md-6">
             <h5 class="font-weight-bold mb-3">Distribución de calificaciones</h5>
             {% for star, percentage in rating_percentage.items %}
-                <div class="rating-bar d-flex align-items-center">
-                    <span class="text-muted">{{ star }} estrellas</span>
-                    <div class="bar flex-grow-1 mx-2">
-                        <div class="fill" style="width: {{ percentage }}%;"></div>
+                {% if percentage %}
+                    <div class="rating-bar d-flex align-items-center">
+                        <span class="text-muted">{{ star }} estrellas</span>
+                        <div class="bar flex-grow-1 mx-2">
+                            <div class="fill" style="width: {{ percentage }}%; background-color: gold;"></div>
+                        </div>
+                        <span class="text-muted">{{ percentage|floatformat:1 }}%</span>
                     </div>
-                    <span class="text-muted">{{ percentage|floatformat:1 }}%</span>
-                </div>
+                {% else %}
+                    <div class="rating-bar d-flex align-items-center">
+                        <span class="text-muted">{{ star }} estrellas</span>
+                        <div class="bar flex-grow-1 mx-2">
+                            <div class="fill" style="width: {{ percentage }}%; background-color: #dcdcdc ;"></div>
+                        </div>
+                        <span class="text-muted">{{ percentage|floatformat:1 }}%</span>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -125,23 +136,23 @@
     {% endif %}
 
     <br>
-    <div class="card-deck">
+    <div class="card-columns">
         {% for comment in comments %}
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-7">
                         <h5>{{ comment.title }}</h5>
-                        <p>por {{ comment.name }} hace {{ comment.days_since }}</p>
                     </div>
                     <div class="col-lg-5">
                         <p class="float-right">
                             {% for i in range %}
-                                <i class="fas fa-star{% if i >= comment.rating %}-o{% endif %}"></i>
+                            <i style="color: gold;" class="fas fa-star{% if i >= comment.rating %}-o{% endif %}"></i>
                             {% endfor %}
                         </p>
                     </div>
                 </div>
+                <p>por {{ comment.name }} hace {{ comment.days_since }}</p>
                 <p class="card-text">{{ comment.text }}</p>   
             </div>
         </div>
@@ -157,115 +168,49 @@
     <img class="fullscreen-content" id="fullscreenImage">
 </div>
 
-<!-- CSS -->
-<style>
-    .star-rating i {
-        color: gold;
-    }
-    .star-rating-reading i{
-        color: gold;
-    }
-    .rating-bar {
-        margin: 0.4rem 0;
-    }
-    .rating-bar .bar {
-        background-color: #e0e0e0;
-        height: 10px;
-        border-radius: 5px;
-        position: relative;
-    }
-    .rating-bar .fill {
-        background-color: gold;
-        height: 100%;
-        border-radius: 5px;
-    }
-
-.zoom-effect {
-    transition: transform 0.3s ease; /* Transición suave para el zoom */
-}
-
-.zoom-effect:hover {
-    transform: scale(1.1); /* Aumenta el tamaño de la imagen al pasar el mouse */
-}
-
-
-.fullscreen-modal {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    justify-content: center;
-    align-items: center;
-    z-index: 1050;
-}
-
-.fullscreen-content {
-    max-width: 90%;
-    max-height: 90%;
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.star-rating i {
-    cursor: pointer;
-    color: gold;
-    font-size: 1.5rem;
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'app/details.css' %}">
 
 <!-- JavaScript -->
 <script>
-function openFullscreen(img) {
-    const modal = document.getElementById("fullscreenModal");
-    const modalImg = document.getElementById("fullscreenImage");
-    modal.style.display = "flex";
-    modalImg.src = img.src;
-}
-
-function closeFullscreen() {
-    document.getElementById("fullscreenModal").style.display = "none";
-}
-
-document.getElementById("show-form-btn").addEventListener("click", function() {
-    // Muestra el formulario de comentarios
-    document.getElementById("comment-form").style.display = "block";
-    
-    // Desplazamiento suave hacia el formulario
-    document.getElementById("comment-form").scrollIntoView({
-        behavior: "smooth"
-    });
-});
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const stars = document.querySelectorAll('.star-rating i');
-    const ratingInput = document.getElementById('id_rating');
-
-    stars.forEach((star, index) => {
-        star.addEventListener('click', () => {
-            ratingInput.value = index + 1; // Asigna el valor de rating
-            updateStars(index); // Actualiza la visualización de las estrellas
-        });
-    });
-
-    function updateStars(index) {
-        stars.forEach((star, i) => {
-            star.classList.toggle('fas', i <= index);  // Estrella llena para rating seleccionado o menor
-            star.classList.toggle('far', i > index);   // Estrella vacía para rating superior al seleccionado
-        });
+    function openFullscreen(img) {
+        const modal = document.getElementById("fullscreenModal");
+        const modalImg = document.getElementById("fullscreenImage");
+        modal.style.display = "flex";
+        modalImg.src = img.src;
     }
-});
+
+    function closeFullscreen() {
+        document.getElementById("fullscreenModal").style.display = "none";
+    }
+
+    document.getElementById("show-form-btn").addEventListener("click", function() {
+        // Muestra el formulario de comentarios
+        document.getElementById("comment-form").style.display = "block";
+        
+        // Desplazamiento suave hacia el formulario
+        document.getElementById("comment-form").scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star-rating i');
+        const ratingInput = document.getElementById('id_rating');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                ratingInput.value = index + 1; // Asigna el valor de rating
+                updateStars(index); // Actualiza la visualización de las estrellas
+            });
+        });
+
+        function updateStars(index) {
+            stars.forEach((star, i) => {
+                star.classList.toggle('fas', i <= index);  // Estrella llena para rating seleccionado o menor
+                star.classList.toggle('far', i > index);   // Estrella vacía para rating superior al seleccionado
+            });
+        }
+    });
 </script>
 {% endblock %}
