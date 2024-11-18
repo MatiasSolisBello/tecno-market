@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, ImageProduct, Products, Contact, Comment
 from .forms import BrandForm, CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
@@ -109,7 +110,7 @@ class ContactView(View):
         return render(request, self.template_name, data)
 
 
-class CreateProductsView(CreateView):
+class CreateProductsView(LoginRequiredMixin, CreateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
@@ -138,7 +139,7 @@ class CreateProductsView(CreateView):
             return render(request, self.template_name, ctx)
         
 
-class ListProductsView(View):
+class ListProductsView(LoginRequiredMixin, View):
     model = Products
     template_name = 'app/products/list.html'
     
@@ -158,7 +159,7 @@ class ListProductsView(View):
         
         return render(request, self.template_name, data)
 
-class UpdateProduct(UpdateView):
+class UpdateProduct(LoginRequiredMixin, UpdateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
@@ -233,7 +234,7 @@ class SingUpView(View):
             return render(request, self.template_name, ctx)
         
 
-class BrandCreateView(CreateView):
+class BrandCreateView(LoginRequiredMixin, CreateView):
     model = Brand
     form_class = BrandForm
 
@@ -243,3 +244,21 @@ class BrandCreateView(CreateView):
 
     def form_invalid(self, form):
         return JsonResponse({'errors': form.errors}, status=400)
+    
+    
+class CartView(View):
+    #model = cart
+    template_name = 'app/products/cart.html'
+    
+    def get(self, request):
+        data = {}
+        return render(request, self.template_name, data)
+    
+    
+class CheckoutView(View):
+    #model = cart
+    template_name = 'app/products/checkout.html'
+    
+    def get(self, request):
+        data = {}
+        return render(request, self.template_name, data)

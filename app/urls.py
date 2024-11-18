@@ -4,7 +4,7 @@ from django.conf import settings
 from django.urls import path, include
 from .views import (BrandCreateView, HomeView, ContactView, CreateProductsView, 
                     DetallesView, ListProductsView, UpdateProduct, 
-                    delete, SingUpView, ProductsViewset)
+                    delete, SingUpView, ProductsViewset, CartView, CheckoutView)
 from rest_framework import routers
 
 router =routers.DefaultRouter()
@@ -22,6 +22,8 @@ urlpatterns = [
     path('delete/<int:id>/', delete, name="delete"),
     path('create-brand/', BrandCreateView.as_view(), name='brand-create'),
     path('singup/', SingUpView.as_view(), name="singup"),
+    path('cart/', CartView.as_view(), name="cart"),
+    path('checkout/', CheckoutView.as_view(), name="checkout"),
     path('api/', include(router.urls)),
 ]
 
