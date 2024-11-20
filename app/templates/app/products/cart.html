@@ -2,6 +2,7 @@
 {% block contenido %}
 {% load humanize %}
 
+{% if cart %}
 <div class="container">
     <div class="text-center" style="padding-top: 20px;">
         <h1>Carrito</h1>
@@ -9,45 +10,75 @@
     </div>
     <br>
 
-    <table class="table">
+    <div class="text-right">
+        <button id="clear-cart" class="btn btn-secondary">
+            Limpiar carrito
+        </button>
+    </div>
+    <br>
+
+    <table class="table" id="cart-items">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Precio</th>
                 <th scope="col">Cantidad</th>
+                <th></th>
                 <th scope="col">Total</th>
             </tr>
         </thead>
         <tbody>
+            {% for i in cart %}
             <tr>
-                <th scope="row">1</th>
+                <th scope="row"></th>
                 <td>
                     <div class="row">
                         <div class="col-md-3 mt-1">
                             <img class="img-fluid img-responsive" 
-                                src="https://i.imgur.com/QpjAiHq.jpg">
+                                src="{{ i.image }}">
                         </div>
                         <div class="col-md-6 mt-1">
-                            <h5>Quant olap shirts</h5>
+                            <h5>{{ i.name }}</h5>
                         </div>
                     </div>
                 </td>
-                <td>$14.990</td>
+                <td>${{ i.price|intcomma }}</td>
                 <td>
-                    <input type="number" name="quantity" id="id_quantity" value="2">
+                    <input type="number" name="quantity" id="id_quantity" value="{{ i.quantity }}">
                 </td>
-                <td>$14.990</td>
+                <td>
+                    <button class="remove-from-cart btn btn-danger" data-product-id="{{ i.product_id }}">Quitar</button>
+                </td>
+                <td>${{ i.total|intcomma }}</td>
             </tr>
+            {% empty %}
+            <h2>wea vacia</h2>
+            {% endfor %}
         </tbody>
     </table>
 
     <div class="text-right">
-        <h4 id="subtotal">Subtotal: $14.990</h4>
-        <br>
+        <div><h3 id="cart-total">Total: ${{ total_price|intcomma }}</h3></div>
         <a href="{% url 'checkout' %}" class="btn btn-danger">Finalizar pedido</a>
     </div>
+    <br>
+    <br>
 </div>
+{% else %}
+<div class="col-12"> 
+    <div class="d-flex justify-content-center align-items-center" style="height: 450px">
+        <div class="d-flex flex-column align-items-center">
+            <h1>Carrito</h1>
+            <p>Su carrito está actualmente vacío</p>
+            <a class="btn btn-danger" href="{% url 'home' %}">
+                Continuar la compra -->
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
 
 <style>
 #id_quantity{
@@ -57,6 +88,129 @@
 
 
 <script>
+    document.getElementById('clear-cart').addEventListener('click', function () {
+        fetch('/cart/clear/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'), // Función para obtener el token CSRF
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            }
+        });
+    });
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
+
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            console.log(this.dataset);
+            const productId = this.dataset.productId;
+            console.log(productId);
+    
+            fetch(`/cart/remove/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        });
+    });
+    
+    function assignQuantityChangeEvents() {
+        console.log('assignQuantityChangeEvents 1');
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function () {
+                const productId = this.dataset.productId;
+                const newQuantity = parseInt(this.value, 10) || 1;
+    
+                fetch(`/cart/update/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({ quantity: newQuantity }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCartUI(data.cart); // Actualizamos la tabla
+                        updateCartCounter(data.cart_count); // Actualizamos el contador
+                    }
+                });
+            });
+        });
+    }
+
+    function assignQuantityChangeEvents() {
+        console.log('assignQuantityChangeEvents 2');
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function () {
+                const productId = this.dataset.productId;
+                const newQuantity = parseInt(this.value, 10) || 1;
+    
+                // Evitamos cantidades negativas o cero
+                if (newQuantity <= 0) {
+                    alert('La cantidad debe ser mayor a 0.');
+                    this.value = 1; // Restablecemos a 1 si es inválido
+                    return;
+                }
+    
+                // Actualizamos el carrito en el servidor
+                fetch(`/cart/update/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({ quantity: newQuantity }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualizamos el total de la fila
+                        const row = this.closest('tr');
+                        const price = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('$', '').replace(',', ''));
+                        const totalCell = row.querySelector('td:nth-child(6)');
+                        const newRowTotal = price * newQuantity;
+                        totalCell.textContent = `$${newRowTotal.toLocaleString()}`;
+    
+                        // Actualizamos el total global
+                        const total = Object.values(data.cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+                        document.querySelector('#cart-total').textContent = `$${total.toLocaleString()}`;
+    
+                        // Actualizamos el contador de la barra superior
+                        updateCartCounter(data.cart_count);
+                    }
+                });
+            });
+        });
+    }
+    
+    
+    
+    
+    
 </script>
 {% endblock %}

@@ -80,7 +80,7 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'cart' %}">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span class="badge badge-dark">2</span>
+                <span class="badge badge-dark" id="cart-count">{{ request.session.quantity_cart }}</span>
               </a>
             </li>
           </ul>
@@ -131,6 +131,10 @@
     $(document).ready(function () {
       $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
     });
+
+    function updateCartCounter(count) {
+      document.getElementById('cart-count').textContent = count;
+    }
   </script>
 </body>
 

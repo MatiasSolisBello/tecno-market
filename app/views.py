@@ -246,19 +246,85 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
         return JsonResponse({'errors': form.errors}, status=400)
     
     
-class CartView(View):
-    #model = cart
-    template_name = 'app/products/cart.html'
-    
-    def get(self, request):
-        data = {}
-        return render(request, self.template_name, data)
-    
-    
+
 class CheckoutView(View):
     #model = cart
     template_name = 'app/products/checkout.html'
     
     def get(self, request):
         data = {}
+        print('CartView')
         return render(request, self.template_name, data)
+    
+    
+from .cart import Cart
+from django.http import JsonResponse
+
+class AddToCartView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Products, id=product_id)
+        quantity = int(request.POST.get('quantity', 1))
+        cart = Cart(request)
+        cart.add(product, quantity)
+
+        #request.session['quantity_cart'] += 1
+        return JsonResponse({'success': True, 'cart': cart.cart})
+    
+    
+from django.views.generic import TemplateView
+class CartDetailView(TemplateView):
+    template_name = 'app/products/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = Cart(self.request)
+        context['cart'] = cart.items()
+        context['total_price'] = cart.get_total_price()
+
+        return context
+    
+class ClearCartView(View):
+    def post(self, request):
+        cart = Cart(request)
+        cart.clear()
+        return redirect('cart')
+    
+class RemoveFromCartView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Products, id=product_id)
+        cart = Cart(request)
+        cart.remove(product)
+
+        return JsonResponse({
+            'success': True,
+            'cart': cart.cart,
+            'cart_count': len(cart)
+        })
+
+
+class UpdateCartView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        quantity = int(request.POST.get('quantity', 1))
+        cart = Cart(request)
+        cart.add(product, quantity - cart.cart.get(str(product_id), {}).get('quantity', 0))
+
+        return JsonResponse({
+            'success': True,
+            'cart': cart.cart,
+            'cart_count': len(cart),
+        })
+
+
+class UpdateCartView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        quantity = int(request.POST.get('quantity', 1))
+        cart = Cart(request)
+        cart.add(product, quantity - cart.cart.get(str(product_id), {}).get('quantity', 0))
+
+        return JsonResponse({
+            'success': True,
+            'cart': cart.cart,
+            'cart_count': len(cart),
+        })

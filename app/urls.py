@@ -2,9 +2,10 @@
 import debug_toolbar
 from django.conf import settings
 from django.urls import path, include
-from .views import (BrandCreateView, HomeView, ContactView, CreateProductsView, 
-                    DetallesView, ListProductsView, UpdateProduct, 
-                    delete, SingUpView, ProductsViewset, CartView, CheckoutView)
+from .views import (AddToCartView, BrandCreateView, CartDetailView, HomeView, ContactView, CreateProductsView, ClearCartView,
+                    DetallesView, ListProductsView, UpdateProduct, RemoveFromCartView,
+                    delete, SingUpView, ProductsViewset, CheckoutView, 
+                    CartDetailView, UpdateCartView)
 from rest_framework import routers
 
 router =routers.DefaultRouter()
@@ -20,11 +21,18 @@ urlpatterns = [
     path('details/<int:id>/', DetallesView.as_view(), name="details"),
     path('update/<int:id>/', UpdateProduct.as_view(), name="update"),
     path('delete/<int:id>/', delete, name="delete"),
+    path('cart/remove/<int:product_id>/', RemoveFromCartView.as_view(), name='remove_from_cart'),
+
     path('create-brand/', BrandCreateView.as_view(), name='brand-create'),
     path('singup/', SingUpView.as_view(), name="singup"),
-    path('cart/', CartView.as_view(), name="cart"),
+    
+    #path('cart/', CartView.as_view(), name="cart"),
     path('checkout/', CheckoutView.as_view(), name="checkout"),
+    path('cart/add/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart'),
+    path('cart/clear/', ClearCartView.as_view(), name='clear_cart'),
+    path('cart/', CartDetailView.as_view(), name='cart'),
     path('api/', include(router.urls)),
+    path('cart/update/<int:product_id>/', UpdateCartView.as_view(), name='update_cart'),
 ]
 
 if settings.DEBUG:

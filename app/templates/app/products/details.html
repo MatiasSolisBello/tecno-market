@@ -37,7 +37,9 @@
         <div class="col-6">
             <h2 class="display-4">{{ product.name }}</h2>
             <p style="font-size: 26px;">${{ product.price | intcomma }}</p>
-            <a href="{% url 'home' %}" class="btn btn-warning">Volver atras</a>
+            <button class="btn btn-warning add-to-cart" data-product-id="{{ product.id }}">
+                Añadir al carrito
+            </button>
         </div>
     </div>
 
@@ -212,5 +214,59 @@
             });
         }
     });
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = this.dataset.productId;
+            const quantity = 1;
+    
+            fetch(`/cart/add/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ quantity }), // Si deseas pasar datos en JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    let timerInterval;
+                    Swal.fire({
+                    title: "Producto añadido al carrito",
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: false,
+                    willClose: () => {
+                        clearInterval(timerInterval);
+                        location.reload();
+                    }
+                    }).then((result) => {
+                    /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            console.log("I was closed by the timer");
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        console.log('cookieValue: ', cookieValue)
+        return cookieValue;
+    }
+    
 </script>
 {% endblock %}
