@@ -52,8 +52,6 @@
                 </td>
                 <td>${{ i.total|intcomma }}</td>
             </tr>
-            {% empty %}
-            <h2>wea vacia</h2>
             {% endfor %}
         </tbody>
     </table>
@@ -120,9 +118,7 @@
 
     document.querySelectorAll('.remove-from-cart').forEach(button => {
         button.addEventListener('click', function () {
-            console.log(this.dataset);
             const productId = this.dataset.productId;
-            console.log(productId);
     
             fetch(`/cart/remove/${productId}/`, {
                 method: 'POST',
@@ -207,6 +203,53 @@
             });
         });
     }
+    
+    document.querySelectorAll('input[name="quantity"]').forEach(input => {
+        input.addEventListener('change', function () {
+            const quantity = parseInt(this.value);
+            const row = this.closest('tr'); // Obtener la fila actual
+            const productId = row.querySelector('.remove-from-cart').getAttribute('data-product-id');
+            
+            // Verifica que la cantidad sea válida
+            if (quantity > 0) {
+                updateCart(productId, quantity, row);
+            } else {
+                alert("La cantidad debe ser mayor a 0.");
+                this.value = 1; // Reestablece un valor válido si el input no lo es
+            }
+        });
+    });
+
+    function updateCart(productId, quantity, row) {
+        fetch('/update-cart/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'), // Incluye tu token CSRF
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: quantity,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el total de la fila
+                    row.querySelector('td:last-child').textContent = `$${data.item_total.toLocaleString()}`;
+    
+                    // Actualizar el total general
+                    document.getElementById('cart-total').textContent = `$${data.total_price.toLocaleString()}`;
+                    
+                    console.log(data)
+                    document.getElementById('cart-count').textContent = `${data.quantity.toLocaleString()}`;
+                } else {
+                    alert("No se pudo actualizar el carrito.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
     
     
     

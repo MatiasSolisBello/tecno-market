@@ -35,11 +35,13 @@ class Cart:
         self.save()
 
     def remove(self, product):
+        cart = self.session['cart']
+        quantity_cart = self.session['quantity_cart']
         product_id = str(product.id)
+        
         if product_id in self.cart:
+            self.session['quantity_cart'] = quantity_cart - cart[product_id]['quantity']
             del self.cart[product_id]
-            self.quantity_cart = 0
-            self.save()
 
     def save(self):
         self.session['cart'] = self.cart

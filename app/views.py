@@ -294,6 +294,9 @@ class RemoveFromCartView(View):
         product = get_object_or_404(Products, id=product_id)
         cart = Cart(request)
         cart.remove(product)
+        
+        # Actualizar quantity_cart
+        #request.session['cart']
 
         return JsonResponse({
             'success': True,
@@ -327,4 +330,41 @@ class UpdateCartView(View):
             'success': True,
             'cart': cart.cart,
             'cart_count': len(cart),
+        })
+
+
+import json
+
+class UpdateCartNumbersView(View):
+    """
+    """
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        product_id = data.get('product_id')
+        quantity = data.get('quantity')
+        
+        print(self.request.session['quantity_cart'])
+        self.request.session['quantity_cart'] = quantity
+
+        if not product_id or not quantity:
+            return JsonResponse({'success': False}, status=400)
+
+        # Obtener el carrito de la sesión
+        cart = request.session.get('cart', {})
+
+        if str(product_id) in cart:
+            cart[str(product_id)]['quantity'] = quantity
+            cart[str(product_id)]['total'] = cart[str(product_id)]['price'] * quantity
+
+        # Calcular el precio total
+        total_price = sum(item['total'] for item in cart.values())
+
+        # Guardar los cambios en la sesión
+        request.session['cart'] = cart
+
+        return JsonResponse({
+            'success': True,
+            'item_total': cart[str(product_id)]['total'],
+            'total_price': total_price,
+            'quantity': quantity
         })

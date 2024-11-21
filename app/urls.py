@@ -5,7 +5,7 @@ from django.urls import path, include
 from .views import (AddToCartView, BrandCreateView, CartDetailView, HomeView, ContactView, CreateProductsView, ClearCartView,
                     DetallesView, ListProductsView, UpdateProduct, RemoveFromCartView,
                     delete, SingUpView, ProductsViewset, CheckoutView, 
-                    CartDetailView, UpdateCartView)
+                    CartDetailView, UpdateCartView, UpdateCartNumbersView)
 from rest_framework import routers
 
 router =routers.DefaultRouter()
@@ -23,6 +23,7 @@ urlpatterns = [
     path('delete/<int:id>/', delete, name="delete"),
     path('cart/remove/<int:product_id>/', RemoveFromCartView.as_view(), name='remove_from_cart'),
 
+    path('update-cart/', UpdateCartNumbersView.as_view(), name='update-cart'),
     path('create-brand/', BrandCreateView.as_view(), name='brand-create'),
     path('singup/', SingUpView.as_view(), name="singup"),
     
