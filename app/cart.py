@@ -22,7 +22,6 @@ class Cart:
         if product_id in self.cart:
             self.cart[product_id]['quantity'] += quantity
         else:
-            print('ADD: ',  type(product.price), type(quantity) )
             self.cart[product_id] = {
                 'product_id': product.id,
                 'name': product.name,
@@ -46,7 +45,6 @@ class Cart:
     def save(self):
         self.session['cart'] = self.cart
         self.session['quantity_cart'] += 1
-        print('SAVE: ', self.quantity_cart, self.cart)
         self.session.modified = True
 
     def clear(self):

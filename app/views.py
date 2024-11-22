@@ -1,8 +1,12 @@
+import json
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, ImageProduct, Products, Contact, Comment
+from .cart import Cart
 from .forms import BrandForm, CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
 from django.contrib import messages
+from django.views.generic import TemplateView
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login
@@ -77,7 +81,6 @@ class DetallesView(View):
         }
         form = self.form_class(data = request.POST)
         if form.is_valid():
-            print('CD: ', form.cleaned_data)
             form.save()
             messages.success(request, "Comentario enviado correctamente")
         else:
@@ -118,7 +121,6 @@ class CreateProductsView(LoginRequiredMixin, CreateView):
     def get(self, request):
         form = self.form_class()
         ctx = {'form': form, 'brand_form': BrandForm }
-        print(ctx)
         return render(request, self.template_name, ctx)
     
     def post(self, request, *args, **kwargs):
@@ -194,7 +196,6 @@ def delete(request, id):
     producto = get_object_or_404(Products, id=id)
     producto.delete()
     image = ImageProduct.objects.filter(product=producto)
-    print('DELETE img: ', image)
     messages.warning(request, "Eliminado  correctamente")
     return redirect(to="list")
 
@@ -253,12 +254,9 @@ class CheckoutView(View):
     
     def get(self, request):
         data = {}
-        print('CartView')
         return render(request, self.template_name, data)
     
     
-from .cart import Cart
-from django.http import JsonResponse
 
 class AddToCartView(View):
     def post(self, request, product_id):
@@ -271,7 +269,6 @@ class AddToCartView(View):
         return JsonResponse({'success': True, 'cart': cart.cart})
     
     
-from django.views.generic import TemplateView
 class CartDetailView(TemplateView):
     template_name = 'app/products/cart.html'
 
@@ -319,7 +316,7 @@ class UpdateCartView(View):
         })
 
 
-class UpdateCartView(View):
+""" class UpdateCartView(View):
     def post(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
         quantity = int(request.POST.get('quantity', 1))
@@ -330,10 +327,7 @@ class UpdateCartView(View):
             'success': True,
             'cart': cart.cart,
             'cart_count': len(cart),
-        })
-
-
-import json
+        }) """
 
 class UpdateCartNumbersView(View):
     """
@@ -342,8 +336,6 @@ class UpdateCartNumbersView(View):
         data = json.loads(request.body)
         product_id = data.get('product_id')
         quantity = data.get('quantity')
-        
-        print(self.request.session['quantity_cart'])
         self.request.session['quantity_cart'] = quantity
 
         if not product_id or not quantity:
