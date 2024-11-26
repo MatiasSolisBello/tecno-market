@@ -9,3 +9,4 @@ python-jose >= 3.0.0
 django-environ==0.8.1
 django-choices==1.7.1
 django-debug-toolbar
+pyyaml==6.0.2

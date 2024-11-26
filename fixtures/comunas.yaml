@@ -1,0 +1,2767 @@
+- model: app.region
+  pk: 1
+  fields:
+    name: Arica y Parinacota
+    ordinal: XV
+- model: app.region
+  pk: 2
+  fields:
+    name: "Tarapac\xE1"
+    ordinal: I
+- model: app.region
+  pk: 3
+  fields:
+    name: Antofagasta
+    ordinal: II
+- model: app.region
+  pk: 4
+  fields:
+    name: Atacama
+    ordinal: III
+- model: app.region
+  pk: 5
+  fields:
+    name: Coquimbo
+    ordinal: IV
+- model: app.region
+  pk: 6
+  fields:
+    name: "Valpara\xEDso"
+    ordinal: V
+- model: app.region
+  pk: 7
+  fields:
+    name: Santiago
+    ordinal: RM
+- model: app.region
+  pk: 8
+  fields:
+    name: Libertador General Bernardo O'Higgins
+    ordinal: VI
+- model: app.region
+  pk: 9
+  fields:
+    name: Maule
+    ordinal: VII
+- model: app.region
+  pk: 10
+  fields:
+    name: "Biob\xEDo"
+    ordinal: VIII
+- model: app.region
+  pk: 11
+  fields:
+    name: "La Araucan\xEDa"
+    ordinal: IX
+- model: app.region
+  pk: 12
+  fields:
+    name: "Los R\xEDos"
+    ordinal: XIV
+- model: app.region
+  pk: 13
+  fields:
+    name: Los Lagos
+    ordinal: X
+- model: app.region
+  pk: 14
+  fields:
+    name: "Ais\xE9n del General Carlos Ib\xE1\xF1ez del Campo"
+    ordinal: XI
+- model: app.region
+  pk: 15
+  fields:
+    name: "Magallanes y de la Ant\xE1rtica Chilena"
+    ordinal: XII
+- model: app.region
+  pk: 16
+  fields:
+    name: "\xD1uble"
+    ordinal: XVI
+- model: app.province
+  pk: 1
+  fields:
+    name: Arica
+    region: 1
+- model: app.province
+  pk: 2
+  fields:
+    name: Parinacota
+    region: 1
+- model: app.province
+  pk: 3
+  fields:
+    name: Iquique
+    region: 2
+- model: app.province
+  pk: 4
+  fields:
+    name: El Tamarugal
+    region: 2
+- model: app.province
+  pk: 5
+  fields:
+    name: Antofagasta
+    region: 3
+- model: app.province
+  pk: 6
+  fields:
+    name: El Loa
+    region: 3
+- model: app.province
+  pk: 7
+  fields:
+    name: Tocopilla
+    region: 3
+- model: app.province
+  pk: 8
+  fields:
+    name: "Cha\xF1aral"
+    region: 4
+- model: app.province
+  pk: 9
+  fields:
+    name: "Copiap\xF3"
+    region: 4
+- model: app.province
+  pk: 10
+  fields:
+    name: Huasco
+    region: 4
+- model: app.province
+  pk: 11
+  fields:
+    name: Choapa
+    region: 5
+- model: app.province
+  pk: 12
+  fields:
+    name: Elqui
+    region: 5
+- model: app.province
+  pk: 13
+  fields:
+    name: "Limar\xED"
+    region: 5
+- model: app.province
+  pk: 14
+  fields:
+    name: Isla de Pascua
+    region: 6
+- model: app.province
+  pk: 15
+  fields:
+    name: Los Andes
+    region: 6
+- model: app.province
+  pk: 16
+  fields:
+    name: Petorca
+    region: 6
+- model: app.province
+  pk: 17
+  fields:
+    name: Quillota
+    region: 6
+- model: app.province
+  pk: 18
+  fields:
+    name: San Antonio
+    region: 6
+- model: app.province
+  pk: 19
+  fields:
+    name: San Felipe de Aconcagua
+    region: 6
+- model: app.province
+  pk: 20
+  fields:
+    name: Valparaiso
+    region: 6
+- model: app.province
+  pk: 21
+  fields:
+    name: Chacabuco
+    region: 7
+- model: app.province
+  pk: 22
+  fields:
+    name: Cordillera
+    region: 7
+- model: app.province
+  pk: 23
+  fields:
+    name: Maipo
+    region: 7
+- model: app.province
+  pk: 24
+  fields:
+    name: Melipilla
+    region: 7
+- model: app.province
+  pk: 25
+  fields:
+    name: Santiago
+    region: 7
+- model: app.province
+  pk: 26
+  fields:
+    name: Talagante
+    region: 7
+- model: app.province
+  pk: 27
+  fields:
+    name: Cachapoal
+    region: 8
+- model: app.province
+  pk: 28
+  fields:
+    name: Cardenal Caro
+    region: 8
+- model: app.province
+  pk: 29
+  fields:
+    name: Colchagua
+    region: 8
+- model: app.province
+  pk: 30
+  fields:
+    name: Cauquenes
+    region: 9
+- model: app.province
+  pk: 31
+  fields:
+    name: "Curic\xF3"
+    region: 9
+- model: app.province
+  pk: 32
+  fields:
+    name: Linares
+    region: 9
+- model: app.province
+  pk: 33
+  fields:
+    name: Talca
+    region: 9
+- model: app.province
+  pk: 34
+  fields:
+    name: Arauco
+    region: 10
+- model: app.province
+  pk: 35
+  fields:
+    name: "Bio B\xEDo"
+    region: 10
+- model: app.province
+  pk: 36
+  fields:
+    name: "Concepci\xF3n"
+    region: 10
+- model: app.province
+  pk: 37
+  fields:
+    name: "\xD1uble"
+    region: 10
+- model: app.province
+  pk: 38
+  fields:
+    name: "Caut\xEDn"
+    region: 11
+- model: app.province
+  pk: 39
+  fields:
+    name: Malleco
+    region: 11
+- model: app.province
+  pk: 40
+  fields:
+    name: Valdivia
+    region: 12
+- model: app.province
+  pk: 41
+  fields:
+    name: Ranco
+    region: 12
+- model: app.province
+  pk: 42
+  fields:
+    name: "Chilo\xE9"
+    region: 13
+- model: app.province
+  pk: 43
+  fields:
+    name: Llanquihue
+    region: 13
+- model: app.province
+  pk: 44
+  fields:
+    name: Osorno
+    region: 13
+- model: app.province
+  pk: 45
+  fields:
+    name: Palena
+    region: 13
+- model: app.province
+  pk: 46
+  fields:
+    name: "Ais\xE9n"
+    region: 14
+- model: app.province
+  pk: 47
+  fields:
+    name: "Capit\xE1n Prat"
+    region: 14
+- model: app.province
+  pk: 48
+  fields:
+    name: Coihaique
+    region: 14
+- model: app.province
+  pk: 49
+  fields:
+    name: General Carrera
+    region: 14
+- model: app.province
+  pk: 50
+  fields:
+    name: "Ant\xE1rtica Chilena"
+    region: 15
+- model: app.province
+  pk: 51
+  fields:
+    name: Magallanes
+    region: 15
+- model: app.province
+  pk: 52
+  fields:
+    name: Tierra del Fuego
+    region: 15
+- model: app.province
+  pk: 53
+  fields:
+    name: "\xDAltima Esperanza"
+    region: 15
+- model: app.commune
+  pk: 1
+  fields:
+    name: Arica
+    code: null
+    province: 1
+    region: 1
+- model: app.commune
+  pk: 2
+  fields:
+    name: Camarones
+    code: null
+    province: 1
+    region: 1
+- model: app.commune
+  pk: 3
+  fields:
+    name: General Lagos
+    code: null
+    province: 2
+    region: 1
+- model: app.commune
+  pk: 4
+  fields:
+    name: Putre
+    code: null
+    province: 2
+    region: 1
+- model: app.commune
+  pk: 5
+  fields:
+    name: Alto Hospicio
+    code: null
+    province: 3
+    region: 2
+- model: app.commune
+  pk: 6
+  fields:
+    name: Iquique
+    code: null
+    province: 3
+    region: 2
+- model: app.commune
+  pk: 7
+  fields:
+    name: "Cami\xF1a"
+    code: null
+    province: 4
+    region: 2
+- model: app.commune
+  pk: 8
+  fields:
+    name: Colchane
+    code: null
+    province: 4
+    region: 2
+- model: app.commune
+  pk: 9
+  fields:
+    name: Huara
+    code: null
+    province: 4
+    region: 2
+- model: app.commune
+  pk: 10
+  fields:
+    name: Pica
+    code: null
+    province: 4
+    region: 2
+- model: app.commune
+  pk: 11
+  fields:
+    name: Pozo Almonte
+    code: null
+    province: 4
+    region: 2
+- model: app.commune
+  pk: 12
+  fields:
+    name: Antofagasta
+    code: null
+    province: 5
+    region: 3
+- model: app.commune
+  pk: 13
+  fields:
+    name: Mejillones
+    code: null
+    province: 5
+    region: 3
+- model: app.commune
+  pk: 14
+  fields:
+    name: Sierra Gorda
+    code: null
+    province: 5
+    region: 3
+- model: app.commune
+  pk: 15
+  fields:
+    name: Taltal
+    code: null
+    province: 5
+    region: 3
+- model: app.commune
+  pk: 16
+  fields:
+    name: Calama
+    code: null
+    province: 6
+    region: 3
+- model: app.commune
+  pk: 17
+  fields:
+    name: Ollague
+    code: null
+    province: 6
+    region: 3
+- model: app.commune
+  pk: 18
+  fields:
+    name: San Pedro de Atacama
+    code: null
+    province: 6
+    region: 3
+- model: app.commune
+  pk: 19
+  fields:
+    name: "Mar\xEDa Elena"
+    code: null
+    province: 7
+    region: 3
+- model: app.commune
+  pk: 20
+  fields:
+    name: Tocopilla
+    code: null
+    province: 7
+    region: 3
+- model: app.commune
+  pk: 21
+  fields:
+    name: "Cha\xF1aral"
+    code: null
+    province: 8
+    region: 4
+- model: app.commune
+  pk: 22
+  fields:
+    name: Diego de Almagro
+    code: null
+    province: 8
+    region: 4
+- model: app.commune
+  pk: 23
+  fields:
+    name: Caldera
+    code: null
+    province: 9
+    region: 4
+- model: app.commune
+  pk: 24
+  fields:
+    name: "Copiap\xF3"
+    code: null
+    province: 9
+    region: 4
+- model: app.commune
+  pk: 25
+  fields:
+    name: Tierra Amarilla
+    code: null
+    province: 9
+    region: 4
+- model: app.commune
+  pk: 26
+  fields:
+    name: Alto del Carmen
+    code: null
+    province: 10
+    region: 4
+- model: app.commune
+  pk: 27
+  fields:
+    name: Freirina
+    code: null
+    province: 10
+    region: 4
+- model: app.commune
+  pk: 28
+  fields:
+    name: Huasco
+    code: null
+    province: 10
+    region: 4
+- model: app.commune
+  pk: 29
+  fields:
+    name: Vallenar
+    code: null
+    province: 10
+    region: 4
+- model: app.commune
+  pk: 30
+  fields:
+    name: Canela
+    code: null
+    province: 11
+    region: 5
+- model: app.commune
+  pk: 31
+  fields:
+    name: Illapel
+    code: null
+    province: 11
+    region: 5
+- model: app.commune
+  pk: 32
+  fields:
+    name: Los Vilos
+    code: null
+    province: 11
+    region: 5
+- model: app.commune
+  pk: 33
+  fields:
+    name: Salamanca
+    code: null
+    province: 11
+    region: 5
+- model: app.commune
+  pk: 34
+  fields:
+    name: Andacollo
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 35
+  fields:
+    name: Coquimbo
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 36
+  fields:
+    name: La Higuera
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 37
+  fields:
+    name: La Serena
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 38
+  fields:
+    name: Paihuaco
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 39
+  fields:
+    name: "Vicu\xF1a"
+    code: null
+    province: 12
+    region: 5
+- model: app.commune
+  pk: 40
+  fields:
+    name: "Combarbal\xE1"
+    code: null
+    province: 13
+    region: 5
+- model: app.commune
+  pk: 41
+  fields:
+    name: Monte Patria
+    code: null
+    province: 13
+    region: 5
+- model: app.commune
+  pk: 42
+  fields:
+    name: Ovalle
+    code: null
+    province: 13
+    region: 5
+- model: app.commune
+  pk: 43
+  fields:
+    name: Punitaqui
+    code: null
+    province: 13
+    region: 5
+- model: app.commune
+  pk: 44
+  fields:
+    name: "R\xEDo Hurtado"
+    code: null
+    province: 13
+    region: 5
+- model: app.commune
+  pk: 45
+  fields:
+    name: Isla de Pascua
+    code: null
+    province: 14
+    region: 6
+- model: app.commune
+  pk: 46
+  fields:
+    name: Calle Larga
+    code: null
+    province: 15
+    region: 6
+- model: app.commune
+  pk: 47
+  fields:
+    name: Los Andes
+    code: null
+    province: 15
+    region: 6
+- model: app.commune
+  pk: 48
+  fields:
+    name: Rinconada
+    code: null
+    province: 15
+    region: 6
+- model: app.commune
+  pk: 49
+  fields:
+    name: San Esteban
+    code: null
+    province: 15
+    region: 6
+- model: app.commune
+  pk: 50
+  fields:
+    name: La Ligua
+    code: null
+    province: 16
+    region: 6
+- model: app.commune
+  pk: 51
+  fields:
+    name: Papudo
+    code: null
+    province: 16
+    region: 6
+- model: app.commune
+  pk: 52
+  fields:
+    name: Petorca
+    code: null
+    province: 16
+    region: 6
+- model: app.commune
+  pk: 53
+  fields:
+    name: Zapallar
+    code: null
+    province: 16
+    region: 6
+- model: app.commune
+  pk: 54
+  fields:
+    name: Hijuelas
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 55
+  fields:
+    name: La Calera
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 56
+  fields:
+    name: La Cruz
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 57
+  fields:
+    name: Limache
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 58
+  fields:
+    name: Nogales
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 59
+  fields:
+    name: "Olmu\xE9"
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 60
+  fields:
+    name: Quillota
+    code: null
+    province: 17
+    region: 6
+- model: app.commune
+  pk: 61
+  fields:
+    name: Algarrobo
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 62
+  fields:
+    name: Cartagena
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 63
+  fields:
+    name: El Quisco
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 64
+  fields:
+    name: El Tabo
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 65
+  fields:
+    name: San Antonio
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 66
+  fields:
+    name: Santo Domingo
+    code: null
+    province: 18
+    region: 6
+- model: app.commune
+  pk: 67
+  fields:
+    name: Catemu
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 68
+  fields:
+    name: Llaillay
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 69
+  fields:
+    name: Panquehue
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 70
+  fields:
+    name: Putaendo
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 71
+  fields:
+    name: San Felipe
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 72
+  fields:
+    name: "Santa Mar\xEDa"
+    code: null
+    province: 19
+    region: 6
+- model: app.commune
+  pk: 73
+  fields:
+    name: Casablanca
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 74
+  fields:
+    name: "Conc\xF3n"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 75
+  fields:
+    name: "Juan Fern\xE1ndez"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 76
+  fields:
+    name: "Puchuncav\xED"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 77
+  fields:
+    name: "Quilpu\xE9"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 78
+  fields:
+    name: Quintero
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 79
+  fields:
+    name: "Valpara\xEDso"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 80
+  fields:
+    name: Villa Alemana
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 81
+  fields:
+    name: "Vi\xF1a del Mar"
+    code: null
+    province: 20
+    region: 6
+- model: app.commune
+  pk: 82
+  fields:
+    name: Colina
+    code: null
+    province: 21
+    region: 7
+- model: app.commune
+  pk: 83
+  fields:
+    name: Lampa
+    code: null
+    province: 21
+    region: 7
+- model: app.commune
+  pk: 84
+  fields:
+    name: Tiltil
+    code: null
+    province: 21
+    region: 7
+- model: app.commune
+  pk: 85
+  fields:
+    name: Pirque
+    code: null
+    province: 22
+    region: 7
+- model: app.commune
+  pk: 86
+  fields:
+    name: Puente Alto
+    code: null
+    province: 22
+    region: 7
+- model: app.commune
+  pk: 87
+  fields:
+    name: "San Jos\xE9 de Maipo"
+    code: null
+    province: 22
+    region: 7
+- model: app.commune
+  pk: 88
+  fields:
+    name: Buin
+    code: null
+    province: 23
+    region: 7
+- model: app.commune
+  pk: 89
+  fields:
+    name: Calera de Tango
+    code: null
+    province: 23
+    region: 7
+- model: app.commune
+  pk: 90
+  fields:
+    name: Paine
+    code: null
+    province: 23
+    region: 7
+- model: app.commune
+  pk: 91
+  fields:
+    name: San Bernardo
+    code: null
+    province: 23
+    region: 7
+- model: app.commune
+  pk: 92
+  fields:
+    name: "Alhu\xE9"
+    code: null
+    province: 24
+    region: 7
+- model: app.commune
+  pk: 93
+  fields:
+    name: "Curacav\xED"
+    code: null
+    province: 24
+    region: 7
+- model: app.commune
+  pk: 94
+  fields:
+    name: "Mar\xEDa Pinto"
+    code: null
+    province: 24
+    region: 7
+- model: app.commune
+  pk: 95
+  fields:
+    name: Melipilla
+    code: null
+    province: 24
+    region: 7
+- model: app.commune
+  pk: 96
+  fields:
+    name: San Pedro
+    code: null
+    province: 24
+    region: 7
+- model: app.commune
+  pk: 97
+  fields:
+    name: Cerrillos
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 98
+  fields:
+    name: Cerro Navia
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 99
+  fields:
+    name: "Conchal\xED"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 100
+  fields:
+    name: El Bosque
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 101
+  fields:
+    name: "Estaci\xF3n Central"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 102
+  fields:
+    name: Huechuraba
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 103
+  fields:
+    name: Independencia
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 104
+  fields:
+    name: La Cisterna
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 105
+  fields:
+    name: La Granja
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 106
+  fields:
+    name: La Florida
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 107
+  fields:
+    name: La Pintana
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 108
+  fields:
+    name: La Reina
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 109
+  fields:
+    name: Las Condes
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 110
+  fields:
+    name: Lo Barnechea
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 111
+  fields:
+    name: Lo Espejo
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 112
+  fields:
+    name: Lo Prado
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 113
+  fields:
+    name: Macul
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 114
+  fields:
+    name: "Maip\xFA"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 115
+  fields:
+    name: "\xD1u\xF1oa"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 116
+  fields:
+    name: Pedro Aguirre Cerda
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 117
+  fields:
+    name: "Pe\xF1alol\xE9n"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 118
+  fields:
+    name: Providencia
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 119
+  fields:
+    name: Pudahuel
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 120
+  fields:
+    name: Quilicura
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 121
+  fields:
+    name: Quinta Normal
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 122
+  fields:
+    name: Recoleta
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 123
+  fields:
+    name: Renca
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 124
+  fields:
+    name: San Miguel
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 125
+  fields:
+    name: "San Joaqu\xEDn"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 126
+  fields:
+    name: "San Ram\xF3n"
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 127
+  fields:
+    name: Santiago
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 128
+  fields:
+    name: Vitacura
+    code: null
+    province: 25
+    region: 7
+- model: app.commune
+  pk: 129
+  fields:
+    name: El Monte
+    code: null
+    province: 26
+    region: 7
+- model: app.commune
+  pk: 130
+  fields:
+    name: Isla de Maipo
+    code: null
+    province: 26
+    region: 7
+- model: app.commune
+  pk: 131
+  fields:
+    name: Padre Hurtado
+    code: null
+    province: 26
+    region: 7
+- model: app.commune
+  pk: 132
+  fields:
+    name: "Pe\xF1aflor"
+    code: null
+    province: 26
+    region: 7
+- model: app.commune
+  pk: 133
+  fields:
+    name: Talagante
+    code: null
+    province: 26
+    region: 7
+- model: app.commune
+  pk: 134
+  fields:
+    name: Codegua
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 135
+  fields:
+    name: "Co\xEDnco"
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 136
+  fields:
+    name: Coltauco
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 137
+  fields:
+    name: "Do\xF1ihue"
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 138
+  fields:
+    name: Graneros
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 139
+  fields:
+    name: Las Cabras
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 140
+  fields:
+    name: "Machal\xED"
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 141
+  fields:
+    name: Malloa
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 142
+  fields:
+    name: Mostazal
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 143
+  fields:
+    name: Olivar
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 144
+  fields:
+    name: Peumo
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 145
+  fields:
+    name: Pichidegua
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 146
+  fields:
+    name: Quinta de Tilcoco
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 147
+  fields:
+    name: Rancagua
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 148
+  fields:
+    name: Rengo
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 149
+  fields:
+    name: "Requ\xEDnoa"
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 150
+  fields:
+    name: San Vicente de Tagua Tagua
+    code: null
+    province: 27
+    region: 8
+- model: app.commune
+  pk: 151
+  fields:
+    name: La Estrella
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 152
+  fields:
+    name: Litueche
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 153
+  fields:
+    name: Marchihue
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 154
+  fields:
+    name: Navidad
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 155
+  fields:
+    name: Peredones
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 156
+  fields:
+    name: Pichilemu
+    code: null
+    province: 28
+    region: 8
+- model: app.commune
+  pk: 157
+  fields:
+    name: "Ch\xE9pica"
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 158
+  fields:
+    name: Chimbarongo
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 159
+  fields:
+    name: Lolol
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 160
+  fields:
+    name: Nancagua
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 161
+  fields:
+    name: Palmilla
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 162
+  fields:
+    name: Peralillo
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 163
+  fields:
+    name: Placilla
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 164
+  fields:
+    name: Pumanque
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 165
+  fields:
+    name: San Fernando
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 166
+  fields:
+    name: Santa Cruz
+    code: null
+    province: 29
+    region: 8
+- model: app.commune
+  pk: 167
+  fields:
+    name: Cauquenes
+    code: null
+    province: 30
+    region: 9
+- model: app.commune
+  pk: 168
+  fields:
+    name: Chanco
+    code: null
+    province: 30
+    region: 9
+- model: app.commune
+  pk: 169
+  fields:
+    name: Pelluhue
+    code: null
+    province: 30
+    region: 9
+- model: app.commune
+  pk: 170
+  fields:
+    name: "Curic\xF3"
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 171
+  fields:
+    name: "Huala\xF1\xE9"
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 172
+  fields:
+    name: "Licant\xE9n"
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 173
+  fields:
+    name: Molina
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 174
+  fields:
+    name: Rauco
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 175
+  fields:
+    name: Romeral
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 176
+  fields:
+    name: Sagrada Familia
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 177
+  fields:
+    name: Teno
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 178
+  fields:
+    name: "Vichuqu\xE9n"
+    code: null
+    province: 31
+    region: 9
+- model: app.commune
+  pk: 179
+  fields:
+    name: "Colb\xFAn"
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 180
+  fields:
+    name: Linares
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 181
+  fields:
+    name: "Longav\xED"
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 182
+  fields:
+    name: Parral
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 183
+  fields:
+    name: Retiro
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 184
+  fields:
+    name: San Javier
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 185
+  fields:
+    name: Villa Alegre
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 186
+  fields:
+    name: Yerbas Buenas
+    code: null
+    province: 32
+    region: 9
+- model: app.commune
+  pk: 187
+  fields:
+    name: "Constituci\xF3n"
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 188
+  fields:
+    name: Curepto
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 189
+  fields:
+    name: Empedrado
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 190
+  fields:
+    name: Maule
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 191
+  fields:
+    name: Pelarco
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 192
+  fields:
+    name: Pencahue
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 193
+  fields:
+    name: "R\xEDo Claro"
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 194
+  fields:
+    name: San Clemente
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 195
+  fields:
+    name: San Rafael
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 196
+  fields:
+    name: Talca
+    code: null
+    province: 33
+    region: 9
+- model: app.commune
+  pk: 197
+  fields:
+    name: Arauco
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 198
+  fields:
+    name: "Ca\xF1ete"
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 199
+  fields:
+    name: Contulmo
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 200
+  fields:
+    name: Curanilahue
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 201
+  fields:
+    name: Lebu
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 202
+  fields:
+    name: "Los \xC1lamos"
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 203
+  fields:
+    name: "Tir\xFAa"
+    code: null
+    province: 34
+    region: 10
+- model: app.commune
+  pk: 204
+  fields:
+    name: "Alto Biob\xEDo"
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 205
+  fields:
+    name: Antuco
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 206
+  fields:
+    name: Cabrero
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 207
+  fields:
+    name: Laja
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 208
+  fields:
+    name: "Los \xC1ngeles"
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 209
+  fields:
+    name: "Mulch\xE9n"
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 210
+  fields:
+    name: Nacimiento
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 211
+  fields:
+    name: Negrete
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 212
+  fields:
+    name: Quilaco
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 213
+  fields:
+    name: Quilleco
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 214
+  fields:
+    name: San Rosendo
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 215
+  fields:
+    name: "Santa B\xE1rbara"
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 216
+  fields:
+    name: Tucapel
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 217
+  fields:
+    name: Yumbel
+    code: null
+    province: 35
+    region: 10
+- model: app.commune
+  pk: 218
+  fields:
+    name: Chiguayante
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 219
+  fields:
+    name: "Concepci\xF3n"
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 220
+  fields:
+    name: Coronel
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 221
+  fields:
+    name: Florida
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 222
+  fields:
+    name: "Hualp\xE9n"
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 223
+  fields:
+    name: Hualqui
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 224
+  fields:
+    name: Lota
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 225
+  fields:
+    name: Penco
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 226
+  fields:
+    name: San Pedro de La Paz
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 227
+  fields:
+    name: Santa Juana
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 228
+  fields:
+    name: Talcahuano
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 229
+  fields:
+    name: "Tom\xE9"
+    code: null
+    province: 36
+    region: 10
+- model: app.commune
+  pk: 230
+  fields:
+    name: Bulnes
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 231
+  fields:
+    name: "Chill\xE1n"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 232
+  fields:
+    name: "Chill\xE1n Viejo"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 233
+  fields:
+    name: Cobquecura
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 234
+  fields:
+    name: Coelemu
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 235
+  fields:
+    name: Coihueco
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 236
+  fields:
+    name: El Carmen
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 237
+  fields:
+    name: Ninhue
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 238
+  fields:
+    name: "\xD1iquen"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 239
+  fields:
+    name: Pemuco
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 240
+  fields:
+    name: Pinto
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 241
+  fields:
+    name: Portezuelo
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 242
+  fields:
+    name: "Quill\xF3n"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 243
+  fields:
+    name: Quirihue
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 244
+  fields:
+    name: "R\xE1nquil"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 245
+  fields:
+    name: San Carlos
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 246
+  fields:
+    name: "San Fabi\xE1n"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 247
+  fields:
+    name: San Ignacio
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 248
+  fields:
+    name: "San Nicol\xE1s"
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 249
+  fields:
+    name: Treguaco
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 250
+  fields:
+    name: Yungay
+    code: null
+    province: 37
+    region: 16
+- model: app.commune
+  pk: 251
+  fields:
+    name: Carahue
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 252
+  fields:
+    name: Cholchol
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 253
+  fields:
+    name: Cunco
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 254
+  fields:
+    name: Curarrehue
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 255
+  fields:
+    name: Freire
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 256
+  fields:
+    name: Galvarino
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 257
+  fields:
+    name: Gorbea
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 258
+  fields:
+    name: Lautaro
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 259
+  fields:
+    name: Loncoche
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 260
+  fields:
+    name: Melipeuco
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 261
+  fields:
+    name: Nueva Imperial
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 262
+  fields:
+    name: Padre Las Casas
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 263
+  fields:
+    name: Perquenco
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 264
+  fields:
+    name: "Pitrufqu\xE9n"
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 265
+  fields:
+    name: "Puc\xF3n"
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 266
+  fields:
+    name: Saavedra
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 267
+  fields:
+    name: Temuco
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 268
+  fields:
+    name: Teodoro Schmidt
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 269
+  fields:
+    name: "Tolt\xE9n"
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 270
+  fields:
+    name: "Vilc\xFAn"
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 271
+  fields:
+    name: Villarrica
+    code: null
+    province: 38
+    region: 11
+- model: app.commune
+  pk: 272
+  fields:
+    name: Angol
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 273
+  fields:
+    name: Collipulli
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 274
+  fields:
+    name: "Curacaut\xEDn"
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 275
+  fields:
+    name: Ercilla
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 276
+  fields:
+    name: Lonquimay
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 277
+  fields:
+    name: Los Sauces
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 278
+  fields:
+    name: Lumaco
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 279
+  fields:
+    name: "Pur\xE9n"
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 280
+  fields:
+    name: Renaico
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 281
+  fields:
+    name: "Traigu\xE9n"
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 282
+  fields:
+    name: Victoria
+    code: null
+    province: 39
+    region: 11
+- model: app.commune
+  pk: 283
+  fields:
+    name: Corral
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 284
+  fields:
+    name: Lanco
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 285
+  fields:
+    name: Los Lagos
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 286
+  fields:
+    name: "M\xE1fil"
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 287
+  fields:
+    name: Mariquina
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 288
+  fields:
+    name: Paillaco
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 289
+  fields:
+    name: Panguipulli
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 290
+  fields:
+    name: Valdivia
+    code: null
+    province: 40
+    region: 12
+- model: app.commune
+  pk: 291
+  fields:
+    name: Futrono
+    code: null
+    province: 41
+    region: 12
+- model: app.commune
+  pk: 292
+  fields:
+    name: "La Uni\xF3n"
+    code: null
+    province: 41
+    region: 12
+- model: app.commune
+  pk: 293
+  fields:
+    name: Lago Ranco
+    code: null
+    province: 41
+    region: 12
+- model: app.commune
+  pk: 294
+  fields:
+    name: "R\xEDo Bueno"
+    code: null
+    province: 41
+    region: 12
+- model: app.commune
+  pk: 295
+  fields:
+    name: Ancud
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 296
+  fields:
+    name: Castro
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 297
+  fields:
+    name: Chonchi
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 298
+  fields:
+    name: "Curaco de V\xE9lez"
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 299
+  fields:
+    name: Dalcahue
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 300
+  fields:
+    name: "Puqueld\xF3n"
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 301
+  fields:
+    name: "Queil\xE9n"
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 302
+  fields:
+    name: Quemchi
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 303
+  fields:
+    name: "Quell\xF3n"
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 304
+  fields:
+    name: Quinchao
+    code: null
+    province: 42
+    region: 13
+- model: app.commune
+  pk: 305
+  fields:
+    name: Calbuco
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 306
+  fields:
+    name: "Cocham\xF3"
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 307
+  fields:
+    name: Fresia
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 308
+  fields:
+    name: Frutillar
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 309
+  fields:
+    name: Llanquihue
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 310
+  fields:
+    name: Los Muermos
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 311
+  fields:
+    name: "Maull\xEDn"
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 312
+  fields:
+    name: Puerto Montt
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 313
+  fields:
+    name: Puerto Varas
+    code: null
+    province: 43
+    region: 13
+- model: app.commune
+  pk: 314
+  fields:
+    name: Osorno
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 315
+  fields:
+    name: Puero Octay
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 316
+  fields:
+    name: Purranque
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 317
+  fields:
+    name: Puyehue
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 318
+  fields:
+    name: "R\xEDo Negro"
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 319
+  fields:
+    name: San Juan de la Costa
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 320
+  fields:
+    name: San Pablo
+    code: null
+    province: 44
+    region: 13
+- model: app.commune
+  pk: 321
+  fields:
+    name: "Chait\xE9n"
+    code: null
+    province: 45
+    region: 13
+- model: app.commune
+  pk: 322
+  fields:
+    name: "Futaleuf\xFA"
+    code: null
+    province: 45
+    region: 13
+- model: app.commune
+  pk: 323
+  fields:
+    name: "Hualaihu\xE9"
+    code: null
+    province: 45
+    region: 13
+- model: app.commune
+  pk: 324
+  fields:
+    name: Palena
+    code: null
+    province: 45
+    region: 13
+- model: app.commune
+  pk: 325
+  fields:
+    name: "Ais\xE9n"
+    code: null
+    province: 46
+    region: 14
+- model: app.commune
+  pk: 326
+  fields:
+    name: Cisnes
+    code: null
+    province: 46
+    region: 14
+- model: app.commune
+  pk: 327
+  fields:
+    name: Guaitecas
+    code: null
+    province: 46
+    region: 14
+- model: app.commune
+  pk: 328
+  fields:
+    name: Cochrane
+    code: null
+    province: 47
+    region: 14
+- model: app.commune
+  pk: 329
+  fields:
+    name: O'higgins
+    code: null
+    province: 47
+    region: 14
+- model: app.commune
+  pk: 330
+  fields:
+    name: Tortel
+    code: null
+    province: 47
+    region: 14
+- model: app.commune
+  pk: 331
+  fields:
+    name: Coihaique
+    code: null
+    province: 48
+    region: 14
+- model: app.commune
+  pk: 332
+  fields:
+    name: Lago Verde
+    code: null
+    province: 48
+    region: 14
+- model: app.commune
+  pk: 333
+  fields:
+    name: Chile Chico
+    code: null
+    province: 49
+    region: 14
+- model: app.commune
+  pk: 334
+  fields:
+    name: "R\xEDo Ib\xE1\xF1ez"
+    code: null
+    province: 49
+    region: 14
+- model: app.commune
+  pk: 335
+  fields:
+    name: "Ant\xE1rtica"
+    code: null
+    province: 50
+    region: 15
+- model: app.commune
+  pk: 336
+  fields:
+    name: Cabo de Hornos
+    code: null
+    province: 50
+    region: 15
+- model: app.commune
+  pk: 337
+  fields:
+    name: Laguna Blanca
+    code: null
+    province: 51
+    region: 15
+- model: app.commune
+  pk: 338
+  fields:
+    name: Punta Arenas
+    code: null
+    province: 51
+    region: 15
+- model: app.commune
+  pk: 339
+  fields:
+    name: "R\xEDo Verde"
+    code: null
+    province: 51
+    region: 15
+- model: app.commune
+  pk: 340
+  fields:
+    name: San Gregorio
+    code: null
+    province: 51
+    region: 15
+- model: app.commune
+  pk: 341
+  fields:
+    name: Porvenir
+    code: null
+    province: 52
+    region: 15
+- model: app.commune
+  pk: 342
+  fields:
+    name: Primavera
+    code: null
+    province: 52
+    region: 15
+- model: app.commune
+  pk: 343
+  fields:
+    name: Timaukel
+    code: null
+    province: 52
+    region: 15
+- model: app.commune
+  pk: 344
+  fields:
+    name: Natales
+    code: null
+    province: 53
+    region: 15
+- model: app.commune
+  pk: 345
+  fields:
+    name: Torres del Paine
+    code: null
+    province: 53
+    region: 15
+- model: app.commune
+  pk: 346
+  fields:
+    name: Cabildo
+    code: null
+    province: 16
+    region: 6

@@ -59,8 +59,12 @@
     </table>
 
     <div class="text-right">
-        <div><h3 id="cart-total">Total: ${{ total_price|intcomma }}</h3></div>
-        <a href="{% url 'checkout' %}" class="btn btn-danger">Finalizar pedido</a>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div><h3 id="cart-total">Total: ${{ total_price|intcomma }}</h3></div>
+            {% comment %} <a href="{% url 'checkout' %}" class="btn btn-danger">Finalizar pedido</a> {% endcomment %}
+            <input type="submit" value="Finalizar pedido" class="btn btn-danger">
+        </form>
     </div>
     <br>
     <br>

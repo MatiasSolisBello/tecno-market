@@ -1,5 +1,5 @@
 from django import forms
-from .models import Brand, Contact, ImageProduct, Products, Comment
+from .models import Brand, Contact, ImageProduct, Products, Comment, Checkout
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Div, Layout, Row, Submit, HTML, Field
 from django.contrib.auth.forms import UserCreationForm
@@ -14,7 +14,7 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
-        
+
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
@@ -48,7 +48,7 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    image = forms.ImageField(required=False, 
+    image = forms.ImageField(required=False,
                              validators=[MaxSizeFileValidator(max_file_size=2)],
                              label="Imagen de producto",
                              widget=forms.ClearableFileInput(attrs={'multiple': True})
@@ -76,7 +76,7 @@ class ProductsForm(forms.ModelForm):
     class Meta:
         model = Products
         fields = '__all__'
-        
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -122,17 +122,17 @@ class ProductsForm(forms.ModelForm):
         )
     )
 
-        
+
 class CustomUserCreationForm(UserCreationForm):
-    
+
     #personalizar formulario de registro
 
     #condatos exiistentes
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
-        
-        
+
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -142,7 +142,7 @@ class CommentForm(forms.ModelForm):
             'rating': forms.NumberInput(attrs={'min': 1, 'max': 5, 'readonly': True}),
             'product': forms.HiddenInput(),
         }
-    
+
     def __init__(self, *args, **kwargs):
         product = kwargs.pop('product', None)
         super().__init__(*args, **kwargs)
@@ -172,9 +172,49 @@ class CommentForm(forms.ModelForm):
                 )
             )
         )
-        
-        
+
+
 class BrandForm(forms.ModelForm):
     class Meta:
         model = Brand
         fields = ['name']
+
+
+class CheckoutForm(forms.ModelForm):
+    class Meta:
+        model = Checkout
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-parsley'
+        self.helper.include_media = False
+        self.helper.layout = Layout(
+            Div(
+                Row(
+                    Column('email', css_class='col-md-4'),
+                    Column('phone', css_class='col-md-4'),
+                    Field('created_at'),
+                ),
+                Row(
+                    Column('region', css_class='col-md-4'),
+                    Column('province', css_class='col-md-4'),
+                    Column('commune', css_class='col-md-4'),
+                ),
+                Row(
+                    Column('name', css_class='col-md-3'),
+                    Column('address', css_class='col-md-3'),
+                    Column('reference', css_class='col-md-3'),
+                    Column('total_price', css_class='col-md-3'),
+                ),
+                Row(
+                    Submit(
+                        'submit', "Enviar",
+                        css_class='btn btn-success btn-lg float-right'
+                    ),
+                    css_class="d-flex justify-content-end"
+                )
+            )
+            
+        )

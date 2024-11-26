@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, ImageProduct, Products, Contact, Comment
 from .cart import Cart
-from .forms import BrandForm, CommentForm, ContactForm, ProductsForm, CustomUserCreationForm
+from .forms import BrandForm, CommentForm, CheckoutForm, ContactForm, ProductsForm, CustomUserCreationForm
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
@@ -25,7 +25,7 @@ class ProductsViewset(viewsets.ModelViewSet):
 
     # Filtrar por variable de nombre => localhost:8000/api/products/?name=televisor
     def get_queryset(self):
-        products = Products.objects.all() 
+        products = Products.objects.all()
         name = self.request.GET.get('name')
         if name:
             products = products.filter(name__contains=name)
@@ -41,13 +41,13 @@ class DetallesView(View):
     model = Comment
     template_name = 'app/products/details.html'
     form_class = CommentForm
-    
+
     def get(self, request, id):
         product = get_object_or_404(Products, id = id)
         images = ImageProduct.objects.filter(product_id=id)
         comments = Comment.objects.filter(product_id=id)
         form = self.form_class(product=product)
-        
+
         # Calcular el promedio de calificación
         avg_rating = comments.aggregate(Avg('rating'))['rating__avg'] or 0
          # Calcular la cantidad de cada calificación (1 a 5)
@@ -63,9 +63,9 @@ class DetallesView(View):
             k: (v / total_comments * 100) if total_comments > 0 else 0
             for k, v in rating_distribution.items()
         }
-        
+
         context = {
-            'product':product, 
+            'product':product,
             'images': images,
             'comments': comments,
             'form': form,
@@ -74,7 +74,7 @@ class DetallesView(View):
             'rating_percentage': rating_percentage
         }
         return render(request, self.template_name, context)
-    
+
     def post(self, request, id):
         data = {
             'form': self.form_class()
@@ -86,18 +86,18 @@ class DetallesView(View):
         else:
             data["form"] = form
         return redirect(request.META['HTTP_REFERER'])
-        
-    
+
+
 class ContactView(View):
     model = Contact
     form_class = ContactForm
     template_name = 'app/contact.html'
-    
+
     def get(self, request):
         form = self.form_class()
         ctx = {'form': form}
         return render(request, self.template_name, ctx)
-        
+
     def post(self, request):
         data = {
             'form': self.form_class()
@@ -117,40 +117,40 @@ class CreateProductsView(LoginRequiredMixin, CreateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
-    
+
     def get(self, request):
         form = self.form_class()
         ctx = {'form': form, 'brand_form': BrandForm }
         return render(request, self.template_name, ctx)
-    
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, files=request.FILES)
-        
+
         images = request.FILES.getlist('image')
 
         if form.is_valid():
             product = form.save()
             for image in images:
                 ImageProduct.objects.create(image=image, product=product)
-               
+
             messages.success(request, "Agregado correctamente")
             return redirect('list')
         else:
-            
+
             ctx = {'form': form }
             return render(request, self.template_name, ctx)
-        
+
 
 class ListProductsView(LoginRequiredMixin, View):
     model = Products
     template_name = 'app/products/list.html'
-    
+
     def get(self, request):
         products = self.model.objects.all()
         page = request.GET.get('page', 1)
         try:
             #5 products x pagina, y los muestra segun valor de "page"
-            paginator = Paginator(products, 5) 
+            paginator = Paginator(products, 5)
             products = paginator.page(page)
         except:
             raise Http404
@@ -158,38 +158,38 @@ class ListProductsView(LoginRequiredMixin, View):
             'entity': products, #entity para uso de paginador
             'paginator': paginator
         }
-        
+
         return render(request, self.template_name, data)
 
 class UpdateProduct(LoginRequiredMixin, UpdateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
-    
+
     def get(self, request, id):
         product = get_object_or_404(self.model, id=id)
         form = self.form_class(instance=product)
         ctx = {'form': form, 'instance': product}
         return render(request, self.template_name, ctx)
-    
+
     def post(self, request, id):
         product = get_object_or_404(self.model, id=id)
         form = self.form_class(data=request.POST, instance=product, files=request.FILES)
-        
-        
+
+
         images = request.FILES.getlist('image')
 
         if form.is_valid():
             product = form.save()
             for image in images:
                 ImageProduct.objects.create(image=image, product=product)
-            
+
             messages.success(request, "Modificado correctamente")
             return redirect('list')
-        
+
         ctx = {'form': form }
         return render(request, self.template_name, ctx)
-    
+
 
 @permission_required('app.delete_producto')
 def delete(request, id):
@@ -204,11 +204,11 @@ class SingUpView(View):
     model = Products
     form_class = CustomUserCreationForm
     template_name = 'registration/singup.html'
-    
+
     def get(self, request):
         data = {'form': self.form_class}
         return render(request, self.template_name, data)
-    
+
     def post(self, request):
         data = {'form': self.form_class}
         form = self.form_class(data = request.POST)
@@ -217,7 +217,7 @@ class SingUpView(View):
 
             #loguear al usuario terminado el registro
             user = authenticate(
-                username = form.cleaned_data["username"], 
+                username = form.cleaned_data["username"],
                 password = form.cleaned_data["password1"]
             )
             login(request, user)
@@ -233,7 +233,7 @@ class SingUpView(View):
         else:
             ctx = {'form': form }
             return render(request, self.template_name, ctx)
-        
+
 
 class BrandCreateView(LoginRequiredMixin, CreateView):
     model = Brand
@@ -245,18 +245,19 @@ class BrandCreateView(LoginRequiredMixin, CreateView):
 
     def form_invalid(self, form):
         return JsonResponse({'errors': form.errors}, status=400)
-    
-    
+
+
 
 class CheckoutView(View):
-    #model = cart
+    form_class = CheckoutForm
     template_name = 'app/products/checkout.html'
-    
+
     def get(self, request):
-        data = {}
-        return render(request, self.template_name, data)
-    
-    
+        form = self.form_class()
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+
+
 
 class AddToCartView(View):
     def post(self, request, product_id):
@@ -267,31 +268,44 @@ class AddToCartView(View):
 
         #request.session['quantity_cart'] += 1
         return JsonResponse({'success': True, 'cart': cart.cart})
-    
-    
+
+
 class CartDetailView(TemplateView):
+    """
+    Carrito
+    """
     template_name = 'app/products/cart.html'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart = Cart(self.request)
         context['cart'] = cart.items()
         context['total_price'] = cart.get_total_price()
-
         return context
-    
+
+    def post(self, request):
+        cart = request.session.get('cart', {})
+        print('-----------------')
+        print(type(cart))
+
+        for i in cart:
+            print(i)
+
+        return redirect('checkout')
+
 class ClearCartView(View):
     def post(self, request):
         cart = Cart(request)
         cart.clear()
         return redirect('cart')
-    
+
 class RemoveFromCartView(View):
     def post(self, request, product_id):
         product = get_object_or_404(Products, id=product_id)
         cart = Cart(request)
         cart.remove(product)
-        
+
         # Actualizar quantity_cart
         #request.session['cart']
 

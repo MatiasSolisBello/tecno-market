@@ -1,11 +1,16 @@
 {% extends 'app/navbar.html' %} 
 {% block contenido %} 
-{% load humanize %}
+{% load humanize %} 
+{% load crispy_forms_tags %}
 
 <div class="container">
-    <div class="text-center" style="padding-top: 20px">
-        <h1>Checkout</h1>
-    </div>
-    <br />
+  <div class="text-center" style="padding-top: 20px">
+    <h1>Checkout</h1>
+  </div>
+  <form action="" method="POST">
+      {% csrf_token %} 
+      {% crispy form %}
+  </form>
+  <br />
 </div>
 {% endblock %}
