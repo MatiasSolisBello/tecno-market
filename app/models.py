@@ -33,9 +33,13 @@ class Comment(models.Model):
     """
     Comentarios
     """
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=200, verbose_name=_("Tu nombre"), blank=True, null=True)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, 
+                                related_name='comments')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, 
+                                on_delete=models.CASCADE, 
+                                blank=True, null=True, unique=True)
+    name = models.CharField(max_length=200, verbose_name=_("Tu nombre"), 
+                            blank=True, null=True)
 
     title = models.CharField(max_length=50, verbose_name=("Titulo de comentario"))
     text = models.TextField(verbose_name=("Comentario"))

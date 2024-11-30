@@ -79,7 +79,7 @@
     
     <div id="comment-form" class="card-body w-100" style="display: none;">
         <form method="post">
-            <div class="star-rating">
+            <div class="star-rating d-flex justify-content-center">
                 <!-- Estrellas visuales -->
                 {% for i in range %}
                     <i class="far fa-star" data-value="{{ i|add:1 }}"></i>
@@ -110,9 +110,9 @@
                     <div class="rating-bar d-flex align-items-center">
                         <span class="text-muted">{{ star }} estrellas</span>
                         <div class="bar flex-grow-1 mx-2">
-                            <div class="fill" style="width: {{ percentage }}%; background-color: gold;"></div>
+                            <div class="fill" style="width: {{ percentage }}; background-color: gold;"></div>
                         </div>
-                        <span class="text-muted">{{ percentage|floatformat:1 }}%</span>
+                        <span class="text-muted">{{ percentage }}</span>
                     </div>
                 {% else %}
                     <div class="rating-bar d-flex align-items-center">

@@ -139,16 +139,25 @@ class CommentForm(forms.ModelForm):
         fields = ['product', 'name', 'title', 'text', 'rating']
         widgets = {
             # Limita a 1-5 en el formulario
-            'rating': forms.NumberInput(attrs={'min': 1, 'max': 5, 'readonly': True}),
+            'rating': forms.HiddenInput(attrs={
+                'min': 1, 'max': 5, 'readonly': True, 'required': True
+            }),
             'product': forms.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):
         product = kwargs.pop('product', None)
+        request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
+
+        if request.user.is_authenticated:
+            full_name = f'{request.user.first_name} {request.user.last_name}'
+            self.fields['name'].initial = full_name
+            self.fields['name'].widget.attrs['readonly'] = True
 
         if product:
             self.fields['product'].initial = product
+
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
         self.helper.include_media = False
@@ -157,9 +166,12 @@ class CommentForm(forms.ModelForm):
                 Row(
                     Column('name', css_class='col-md-4'),
                     Column('title', css_class='col-md-4'),
-                    Column('rating', css_class='col-md-4'),
+                    #Column('rating', css_class='col-md-4'),
                     Field('product'),
+                    Field('rating'),
+                    css_class="d-flex justify-content-center"
                 ),
+                
                 Row(
                     Column('text', css_class='col-md-12'),
                 ),

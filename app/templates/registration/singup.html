@@ -1,5 +1,6 @@
-{% extends 'app/navbar.html' %} {% block contenido %} {% load crispy_forms_tags
-%}
+{% extends 'app/navbar.html' %} 
+{% block contenido %} 
+{% load crispy_forms_tags %}
 <div class="container">
   <br /><br />
   <div class="row">
@@ -9,7 +10,8 @@
           <h2>Registrese</h2>
           <hr />
           <form action="" method="POST">
-            {% csrf_token %} {{ form | crispy }}
+            {% csrf_token %} 
+            {% crispy form %}
 
             <input
               type="submit"

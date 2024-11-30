@@ -46,11 +46,13 @@ class DetallesView(View):
         product = get_object_or_404(Products, id = id)
         images = ImageProduct.objects.filter(product_id=id)
         comments = Comment.objects.filter(product_id=id)
-        form = self.form_class(product=product)
+
+        form = self.form_class(product=product, request=request)
 
         # Calcular el promedio de calificación
         avg_rating = comments.aggregate(Avg('rating'))['rating__avg'] or 0
-         # Calcular la cantidad de cada calificación (1 a 5)
+        
+        # Calcular la cantidad de cada calificación (1 a 5)
         ratings_count = comments.values('rating').annotate(count=Count('rating'))
         rating_distribution = {i: 0 for i in range(1, 6)}
         total_comments = comments.count()
@@ -63,6 +65,8 @@ class DetallesView(View):
             k: (v / total_comments * 100) if total_comments > 0 else 0
             for k, v in rating_distribution.items()
         }
+
+        rating_percentage = {k: f"{v:.1f}%" for k, v in rating_percentage.items()}
 
         context = {
             'product':product,
@@ -77,9 +81,9 @@ class DetallesView(View):
 
     def post(self, request, id):
         data = {
-            'form': self.form_class()
+            'form': self.form_class(request=request)
         }
-        form = self.form_class(data = request.POST)
+        form = self.form_class(data=request.POST, request=request)
         if form.is_valid():
             form.save()
             messages.success(request, "Comentario enviado correctamente")
@@ -264,6 +268,7 @@ class AddToCartView(View):
         product = get_object_or_404(Products, id=product_id)
         quantity = int(request.POST.get('quantity', 1))
         cart = Cart(request)
+
         cart.add(product, quantity)
 
         #request.session['quantity_cart'] += 1
@@ -318,7 +323,7 @@ class RemoveFromCartView(View):
 
 class UpdateCartView(View):
     def post(self, request, product_id):
-        product = get_object_or_404(Product, id=product_id)
+        product = get_object_or_404(Products, id=product_id)
         quantity = int(request.POST.get('quantity', 1))
         cart = Cart(request)
         cart.add(product, quantity - cart.cart.get(str(product_id), {}).get('quantity', 0))

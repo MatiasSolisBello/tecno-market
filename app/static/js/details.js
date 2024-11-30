@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function () {
         const productId = this.dataset.productId;
+        console.log(productId);
         const quantity = 1;
 
         fetch(`/cart/add/${productId}/`, {

@@ -44,7 +44,7 @@ class Cart:
 
     def save(self):
         self.session['cart'] = self.cart
-        self.session['quantity_cart'] += 1
+        self.session['quantity_cart'] = self.quantity_cart
         self.session.modified = True
 
     def clear(self):
