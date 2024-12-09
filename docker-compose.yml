@@ -1,0 +1,9 @@
+version: '3.9'
+
+
+services:
+  django:
+    image: tecno-market
+    build: .
+    ports:
+      -"8080:8000"
