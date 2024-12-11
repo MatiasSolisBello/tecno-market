@@ -1,0 +1,15 @@
+version: '3.9'
+
+
+services:
+  web:
+    image: tecno-market
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=tecnomarket.settings
+      - DEBUG=${DEBUG}
+      - SOCIAL_AUTH_FACEBOOK_KEY=${SOCIAL_AUTH_FACEBOOK_KEY}
+      - SOCIAL_AUTH_FACEBOOK_SECRET=${SOCIAL_AUTH_FACEBOOK_SECRET}

@@ -50,7 +50,7 @@ python manage.py runserver
 
 ## Docker
 ```bash
-docker compose -up --build
+docker compose up --build
 ```
 
 ## Otros comandos
