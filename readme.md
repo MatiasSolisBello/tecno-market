@@ -16,8 +16,10 @@ Proyecto basado en el [Curso de Django de Moises Sepulveda 2020](http://https://
 
 Crear entorno virtual.
 ```bash
+sudo apt-get update
 virtualenv venv
 source venv/bin/activate
+pip install -U pip setuptools wheel
 ```
 
 Instalar paquetes necesarios
