@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, ImageProduct, Products, Contact, Comment
 from .cart import Cart
-from .forms import BrandForm, CommentForm, CheckoutForm, ContactForm, ProductsForm, CustomUserCreationForm
+from .forms import BrandForm, CommentForm, CheckoutForm, ContactForm, ImagesProductFormSet, ProductsForm, CustomUserCreationForm
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
@@ -121,28 +121,38 @@ class CreateProductsView(LoginRequiredMixin, CreateView):
     model = Products
     form_class = ProductsForm
     template_name = 'app/products/form.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = kwargs.get('form', self.form_class())
+        context['formset'] = kwargs.get('formset', ImagesProductFormSet())
+        context['brand_form'] = BrandForm()
+        return context
 
-    def get(self, request):
-        form = self.form_class()
-        ctx = {'form': form, 'brand_form': BrandForm }
-        return render(request, self.template_name, ctx)
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        formset = ImagesProductFormSet()
+        context = self.get_context_data(form=form, formset=formset)
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(data=request.POST, files=request.FILES)
+        self.object = None
+        form = self.get_form()
+        formset = ImagesProductFormSet(request.POST, request.FILES)
 
-        images = request.FILES.getlist('image')
-
-        if form.is_valid():
-            product = form.save()
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
+            images = formset.save(commit=False)
             for image in images:
-                ImageProduct.objects.create(image=image, product=product)
+                image.product = self.object
+                image.save()
 
             messages.success(request, "Agregado correctamente")
             return redirect('list')
         else:
-
-            ctx = {'form': form }
-            return render(request, self.template_name, ctx)
+            context = self.get_context_data(form=form, formset=formset)
+            return self.render_to_response(context)
 
 
 class ListProductsView(LoginRequiredMixin, View):
@@ -197,9 +207,9 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
 
 @permission_required('app.delete_producto')
 def delete(request, id):
-    producto = get_object_or_404(Products, id=id)
-    producto.delete()
-    image = ImageProduct.objects.filter(product=producto)
+    product = get_object_or_404(Products, id=id)
+    product.delete()
+    image = ImageProduct.objects.filter(product=product)
     messages.warning(request, "Eliminado  correctamente")
     return redirect(to="list")
 

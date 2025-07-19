@@ -5,13 +5,14 @@ from .forms import ProductsForm
 #-------------------------------------------------
 # Validaciones aplicables en admin de django
 #-------------------------------------------------
-class ImageProductAdmin(admin.TabularInline):
+class ImageProductInline(admin.TabularInline):
     model = ImageProduct
+    extra = 1
 
 class ProductsAdmin(admin.ModelAdmin):
     form = ProductsForm
     inlines = [
-        ImageProductAdmin
+        ImageProductInline
     ]
 
 # Register your models here.

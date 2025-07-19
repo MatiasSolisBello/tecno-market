@@ -48,11 +48,11 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    image = forms.ImageField(required=False,
-                             validators=[MaxSizeFileValidator(max_file_size=2)],
-                             label="Imagen de producto",
-                             widget=forms.ClearableFileInput(attrs={'multiple': True})
-                            )
+    #image = forms.ImageField(required=False,
+    #                         validators=[MaxSizeFileValidator(max_file_size=2)],
+    #                         label="Imagen de producto",
+    #                         widget=forms.ClearableFileInput(attrs={'multiple': True})
+    #                        )
 
     # nombre con minimo de caracteres
     name = forms.CharField(min_length=3, max_length=50, label="Nombre")
@@ -81,9 +81,9 @@ class ProductsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
-        if self.instance.pk:
-            images = ImageProduct.objects.filter(product=self.instance.pk)
-            self.fields['image'].initial= images
+        #if self.instance.pk:
+        #    images = ImageProduct.objects.filter(product=self.instance.pk)
+        #    self.fields['image'].initial= images
         self.helper.include_media = False
         self.helper.layout = Layout(
         Div(
@@ -109,7 +109,7 @@ class ProductsForm(forms.ModelForm):
                 Column('description', css_class='col-md-12'),
             ),
             Row(
-                Column('image', css_class='col-md-6'),
+                #Column('image', css_class='col-md-6'),
                 Column('is_new', css_class='col-md-2'),
             ),
             Row(
@@ -122,6 +122,11 @@ class ProductsForm(forms.ModelForm):
         )
     )
 
+
+class ImagenProductoForm(forms.ModelForm):
+    class Meta:
+        model = ImageProduct
+        fields = ['image']
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -230,3 +235,11 @@ class CheckoutForm(forms.ModelForm):
             )
             
         )
+
+ImagesProductFormSet = forms.inlineformset_factory(
+    Products,
+    ImageProduct,
+    form=ImagenProductoForm,
+    extra=1,  # puedes ajustar la cantidad inicial de formularios
+    can_delete=True
+)
