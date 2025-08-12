@@ -65,4 +65,6 @@ python -m django --version
 Crear proyecto en la misma carpeta (Para eso esta el punto final)
 ```bash
 django-admin startproject <NombreProyecto> .
+python manage.py startapp your_app_name
 ```
+
