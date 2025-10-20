@@ -31,7 +31,7 @@ class ImageProduct(models.Model):
                                 related_name="images")
     
     def __str__(self):
-        return f"Imagen de {self.producto.nombre}"
+        return f"Imagen de {self.product.name}"
 
 class Comment(models.Model):
     """

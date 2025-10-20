@@ -4,7 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Brand, ImageProduct, Products, Contact, Comment
 from .cart import Cart
-from .forms import BrandForm, CommentForm, CheckoutForm, ContactForm, ImagesProductFormSet, ProductsForm, CustomUserCreationForm
+from .forms import (BrandForm, CommentForm, CheckoutForm, ContactForm, 
+                    ImageProductForm, ProductsForm, CustomUserCreationForm)
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
@@ -13,9 +14,8 @@ from django.contrib.auth import authenticate, login
 from django.db.models import Count, Avg
 from django.http import Http404
 from django.http import JsonResponse
-from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
-from django.urls.base import reverse_lazy
 from rest_framework import viewsets
 from .serializers import ProductsSerializer
 
@@ -125,34 +125,28 @@ class CreateProductsView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = kwargs.get('form', self.form_class())
-        context['formset'] = kwargs.get('formset', ImagesProductFormSet())
         context['brand_form'] = BrandForm()
         return context
 
     def get(self, request, *args, **kwargs):
         self.object = None
         form = self.get_form()
-        formset = ImagesProductFormSet()
-        context = self.get_context_data(form=form, formset=formset)
+        context = self.get_context_data(form=form)
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        formset = ImagesProductFormSet(request.POST, request.FILES)
-
-        if form.is_valid() and formset.is_valid():
-            self.object = form.save()
-            images = formset.save(commit=False)
+        form = self.form_class(data=request.POST, files=request.FILES)
+        images = request.FILES.getlist('image')
+        
+        if form.is_valid():
+            product = form.save()
             for image in images:
-                image.product = self.object
-                image.save()
-
+                ImageProduct.objects.create(image=image, product=product)
             messages.success(request, "Agregado correctamente")
             return redirect('list')
         else:
-            context = self.get_context_data(form=form, formset=formset)
-            return self.render_to_response(context)
+            ctx = {'form': form }
+            return render(request, self.template_name, ctx)
 
 
 class ListProductsView(LoginRequiredMixin, View):
@@ -183,25 +177,35 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
     def get(self, request, id):
         product = get_object_or_404(self.model, id=id)
         form = self.form_class(instance=product)
-        ctx = {'form': form, 'instance': product}
+        ctx = {
+            'form': form, 
+            'instance': product,
+            'images': product.images.all(),
+            'image_form': ImageProductForm()
+        }
         return render(request, self.template_name, ctx)
-
+    
     def post(self, request, id):
         product = get_object_or_404(self.model, id=id)
         form = self.form_class(data=request.POST, instance=product, files=request.FILES)
-
-
         images = request.FILES.getlist('image')
+        delete_images = request.POST.getlist('delete_images')
 
         if form.is_valid():
             product = form.save()
+            
+            # eliminar imágenes seleccionadas
+            if delete_images:
+                ImageProduct.objects.filter(id__in=delete_images, 
+                                            product=product).delete()
+                
+            # agregar nuevas imágenes
             for image in images:
                 ImageProduct.objects.create(image=image, product=product)
-
             messages.success(request, "Modificado correctamente")
             return redirect('list')
 
-        ctx = {'form': form }
+        ctx = {'form': form, 'images': product.images.all()  }
         return render(request, self.template_name, ctx)
 
 
@@ -239,15 +243,6 @@ class SingUpView(View):
             return redirect(to="home")
         data["form"] = form
         return render(request, 'registration/singup.html', data)
-        form = self.form_class(data=request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Agregado correctamente")
-            return redirect('list')
-        else:
-            ctx = {'form': form }
-            return render(request, self.template_name, ctx)
-
 
 class BrandCreateView(LoginRequiredMixin, CreateView):
     model = Brand

@@ -4,7 +4,6 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Div, Layout, Row, Submit, HTML, Field
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .validators import MaxSizeFileValidator
 
 from functools import partial
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
@@ -48,11 +47,11 @@ class ContactForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
 
     # imagen no requerido y con peso maximo
-    #image = forms.ImageField(required=False,
-    #                         validators=[MaxSizeFileValidator(max_file_size=2)],
-    #                         label="Imagen de producto",
-    #                         widget=forms.ClearableFileInput(attrs={'multiple': True})
-    #                        )
+    """ image = forms.ImageField(required=False,
+                             validators=[MaxSizeFileValidator(max_file_size=2)],
+                             label="Imagen de producto",
+                             widget=forms.ClearableFileInput(attrs={'multiple': True})
+                            ) """
 
     # nombre con minimo de caracteres
     name = forms.CharField(min_length=3, max_length=50, label="Nombre")
@@ -63,16 +62,6 @@ class ProductsForm(forms.ModelForm):
     # fecha
     fabrication_date = forms.DateField(widget=DateInput(), label="Fecha de fabricación")
 
-    # nombre no se puede repetir
-    #def clean_nombre(self):
-    #    nombre = self.cleaned_data["nombre"]
-    #    existe = Producto.objects.filter(nombre__iexact=nombre).exists()
-    #   if existe:
-    #        raise ValidationError("El nombre ya existe")
-    #   return nombre
-
-
-
     class Meta:
         model = Products
         fields = '__all__'
@@ -81,49 +70,84 @@ class ProductsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-parsley'
-        #if self.instance.pk:
-        #    images = ImageProduct.objects.filter(product=self.instance.pk)
-        #    self.fields['image'].initial= images
         self.helper.include_media = False
-        self.helper.layout = Layout(
-        Div(
-            Row(
-                Column('name', css_class='col-md-4'),
-                Column('price', css_class='col-md-3'),
-                Column(
-                    Div(
-                        'brand',
-                        HTML("""
-                            <button type="button" class="btn btn-sm btn-outline-success ms-2"
-                                data-bs-toggle="modal" data-bs-target="#brandModal">
-                                +
-                            </button>
-                        """),
-                        css_class="d-flex align-items-center"
+        
+        # Layout base
+        layout = [
+            Div(
+                Row(
+                    Column('name', css_class='col-md-4'),
+                    Column('price', css_class='col-md-3'),
+                    Column(
+                        Div(
+                            'brand',
+                            HTML("""
+                                <button type="button" class="btn btn-sm btn-outline-success ms-2"
+                                    data-bs-toggle="modal" data-bs-target="#brandModal">
+                                    +
+                                </button>
+                            """),
+                            css_class="d-flex align-items-center"
+                        ),
+                        css_class='col-md-2'
                     ),
-                    css_class='col-md-2'
+                    Column('fabrication_date', css_class='col-md-3')
                 ),
-                Column('fabrication_date', css_class='col-md-3')
-            ),
-            Row(
-                Column('description', css_class='col-md-12'),
-            ),
-            Row(
-                #Column('image', css_class='col-md-6'),
-                Column('is_new', css_class='col-md-2'),
-            ),
-            Row(
-                Submit(
-                    'submit', "Enviar",
-                    css_class='btn btn-success btn-lg float-right'
+                Row(
+                    Column('description', css_class='col-md-12'),
+                    Column('is_new', css_class='col-md-2'),
                 ),
-                css_class="d-flex justify-content-end"
+            )
+        ]
+        
+        # Si estamos editando (producto existente)
+        if self.instance and self.instance.pk:
+            images = ImageProduct.objects.filter(product=self.instance.pk)
+            if images.exists():
+                images_html = "".join([
+                    f"""
+                    <div class='col-md-3 text-center mb-3'>
+                        <img src='{img.image.url}' class='img-fluid rounded border' style='max-height:150px;'>
+                        <div class='form-check mt-2'>
+                            <input type='checkbox' name='delete_images' value='{img.id}' class='form-check-input'>
+                            <label class='form-check-label'>Eliminar</label>
+                        </div>
+                    </div>
+                    """ for img in images
+                ])
+            else:
+                images_html = "<p class='text-muted'>No hay imágenes asociadas a este producto.</p>"
+
+            layout.append(
+                HTML(f"""
+                    <hr>
+                    <h5 class="mt-4">Imágenes actuales</h5>
+                    <div class='row'>{images_html}</div>
+                """)
+            )
+
+        # Campo de nuevas imágenes
+        layout.append(
+            HTML("""
+                <div class="mt-3">
+                    <label class="form-label fw-bold">Agregar nuevas imágenes</label>
+                    <input type="file" name="image" multiple class="form-control">
+                </div>
+            """)
+        )
+
+        # Botón de envío
+        layout.append(
+            Row(
+                Submit('submit', "Guardar", css_class='btn btn-success btn-lg float-end'),
+                css_class="d-flex justify-content-end mt-4"
             )
         )
-    )
+
+        self.helper.layout = Layout(*layout)
 
 
-class ImagenProductoForm(forms.ModelForm):
+class ImageProductForm(forms.ModelForm):
     class Meta:
         model = ImageProduct
         fields = ['image']
@@ -236,10 +260,3 @@ class CheckoutForm(forms.ModelForm):
             
         )
 
-ImagesProductFormSet = forms.inlineformset_factory(
-    Products,
-    ImageProduct,
-    form=ImagenProductoForm,
-    extra=1,  # puedes ajustar la cantidad inicial de formularios
-    can_delete=True
-)
