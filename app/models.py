@@ -12,6 +12,7 @@ class Brand(models.Model):
 
     def __str__(self): return self.name
 
+
 class Products(models.Model):
     name = models.CharField(max_length=200, verbose_name=_("Nombre de Producto"))
     price = models.IntegerField(verbose_name=_("Precio"))
@@ -165,21 +166,22 @@ class CheckoutItem(models.Model):
         return f"{self.product}"
 
 # Las consultas solo acepta estas opciones
-class OptionsEnquiry(DjangoChoices):
-    CONSULTA = ChoiceItem(1, "Consulta")
-    RECLAMO = ChoiceItem(2, "Reclamo")
-    SUGERENCIA = ChoiceItem(2, "Sugerencia")
-    FELICITACIONES = ChoiceItem(2, "Felicitaciones")
+class OptionsEnquiry(models.IntegerChoices):
+    CONSULTA = 1, "Consulta"
+    RECLAMO = 2, "Reclamo"
+    SUGERENCIA = 3, "Sugerencia"
+    FELICITACIONES = 4, "Felicitaciones"
+
 
 class Contact(models.Model):
-    name = models.CharField(max_length=50, verbose_name=("Nombre Completo"))
-    email = models.EmailField(verbose_name=("Correo"))
+    name = models.CharField(max_length=50, verbose_name="Nombre Completo")
+    email = models.EmailField(verbose_name="Correo")
     type_enquiry = models.IntegerField(
         choices=OptionsEnquiry.choices,
-        verbose_name=("Tipo de consulta")
+        verbose_name="Tipo de consulta"
     )
-    message = models.TextField(verbose_name=("Mensaje"))
-    notice = models.BooleanField(verbose_name=("Aviso"))
+    message = models.TextField(verbose_name="Mensaje")
+    notice = models.BooleanField(verbose_name="Aviso")
 
     def __str__(self):
         return self.name

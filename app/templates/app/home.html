@@ -3,22 +3,20 @@
 
 <!--Definimos el contenido-->
 {% block contenido %}
-<div class="container">
+<div class="container mt-4">
     {% load humanize %}
-    <br>
-    <h2>Productos</h2>
-    <br>
-    <div class="row row-cols-1 row-cols-md-3">
+    <h2 class="mb-4">Productos</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for product in products %}
-        <div class="col mb-4">
+        <div class="col">
 
-            <div class="card">
+            <div class="card shadow-lg rounded">
                 {% if product.images %}
                 <img class="card-img-top" src="{{ product.images.first.image.url }}" alt="image">
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ product.name | title }}</h5>
-                    <p class="card-text">${{ product.price | intcomma }}</p>
+                    <p class="card-text text-success">${{ product.price | intcomma }}</p>
                     <a href="{% url 'details' product.id %}" class="btn btn-warning btn-block">Ver mas</a>
                 </div>
 

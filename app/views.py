@@ -2,7 +2,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Brand, ImageProduct, Products, Contact, Comment
+from .models import Brand, ImageProduct, OptionsEnquiry, Products, Contact, Comment
 from .cart import Cart
 from .forms import (BrandForm, CommentForm, CheckoutForm, ContactForm, 
                     ImageProductForm, ProductsForm, CustomUserCreationForm)
@@ -45,6 +45,7 @@ class DetallesView(View):
     def get(self, request, id):
         product = get_object_or_404(Products, id = id)
         images = ImageProduct.objects.filter(product_id=id)
+        images_text = f'{images.count()} imagenes'
         comments = Comment.objects.filter(product_id=id)
 
         form = self.form_class(product=product, request=request)
@@ -71,6 +72,7 @@ class DetallesView(View):
         context = {
             'product':product,
             'images': images,
+            'images_text': images_text,
             'comments': comments,
             'form': form,
             'range': range(5),
@@ -109,8 +111,8 @@ class ContactView(View):
         form = self.form_class(data = request.POST)
         if form.is_valid():
             form.save()
-            type_msg = form.cleaned_data
-            text = f'{type_msg} enviada correctamente'
+            type_msg = OptionsEnquiry(form.cleaned_data["type_enquiry"])
+            text = f'{type_msg.label} enviada correctamente'
             messages.success(request, text)
         else:
             data["form"] = form
@@ -296,11 +298,11 @@ class CartDetailView(TemplateView):
 
     def post(self, request):
         cart = request.session.get('cart', {})
-        print('-----------------')
-        print(type(cart))
+        #print('-----------------')
+        #print(type(cart))
 
-        for i in cart:
-            print(i)
+        #for i in cart:
+        #    print(i)
 
         return redirect('checkout')
 

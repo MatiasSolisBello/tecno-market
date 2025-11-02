@@ -46,13 +46,6 @@ class ContactForm(forms.ModelForm):
 
 class ProductsForm(forms.ModelForm):
 
-    # imagen no requerido y con peso maximo
-    """ image = forms.ImageField(required=False,
-                             validators=[MaxSizeFileValidator(max_file_size=2)],
-                             label="Imagen de producto",
-                             widget=forms.ClearableFileInput(attrs={'multiple': True})
-                            ) """
-
     # nombre con minimo de caracteres
     name = forms.CharField(min_length=3, max_length=50, label="Nombre")
 
@@ -60,8 +53,8 @@ class ProductsForm(forms.ModelForm):
     price = forms.IntegerField(min_value=1, max_value=1500000, label="Precio")
 
     # fecha
-    fabrication_date = forms.DateField(widget=DateInput(), label="Fecha de fabricación")
-
+    fabrication_date = forms.DateField(widget=DateInput(), 
+                                       label="Fecha de fabricación")
     class Meta:
         model = Products
         fields = '__all__'
