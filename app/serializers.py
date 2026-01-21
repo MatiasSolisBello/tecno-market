@@ -13,19 +13,19 @@ class ProductsSerializer(serializers.ModelSerializer):
     name_brand = serializers.CharField(read_only=True, source="brand.name")
 
     # Mostrar datos de marca en GET Producto
-    brand = BrandSerializer(read_only=True)
+    #brand = BrandSerializer(read_only=True)
 
     # Mostrar solo el id
-    brand_id = serializers.PrimaryKeyRelatedField(
-        queryset = Brand.objects.all(), source="brand"
-    )
+    #brand_id = serializers.PrimaryKeyRelatedField(
+    #    queryset = Brand.objects.all(), source="brand"
+    #)
 
     # Validaciones para nombre => requerido y minimo de caracteres
     name = serializers.CharField(required=True, min_length=3)
 
     # Funcion para evitar ingreso de 2 nombres iguales
     def validate_name(self, value):
-        exist = Products.objets.filter(name__iexact = value).exists()
+        exist = Products.objects.filter(name__iexact = value).exists()
         if exist:
             raise serializers.ValidationError("Este producto ya existe")
         return value
