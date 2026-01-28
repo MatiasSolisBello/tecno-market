@@ -4,12 +4,13 @@ from django.conf import settings
 from django.urls import path, include
 from .views import (AddToCartView, BrandCreateView, CartDetailView, HomeView, ContactView, CreateProductsView, ClearCartView,
                     DetallesView, ListProductsView, UpdateProduct, RemoveFromCartView,
-                    delete, SingUpView, ProductsViewset, CheckoutView, 
+                    delete, SingUpView, ProductsViewset, BrandViewset, CheckoutView, 
                     CartDetailView, UpdateCartView, UpdateCartNumbersView)
 from rest_framework import routers
 
 router =routers.DefaultRouter()
 router.register('products', ProductsViewset)
+router.register('brands', BrandViewset)
 
 urlpatterns = [
     # url / vista /alias

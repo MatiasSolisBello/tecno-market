@@ -24,11 +24,11 @@ class ProductsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, min_length=3)
 
     # Funcion para evitar ingreso de 2 nombres iguales
-    def validate_name(self, value):
-        exist = Products.objects.filter(name__iexact = value).exists()
-        if exist:
-            raise serializers.ValidationError("Este producto ya existe")
-        return value
+    #def validate_name(self, value):
+    #    exist = Products.objects.filter(name__iexact = value).exists()
+    #    if exist:
+    #        raise serializers.ValidationError("Este producto ya existe")
+    #    return value
 
     class Meta:
         model = Products    #modelo a serializar

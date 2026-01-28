@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views import View
 from rest_framework import viewsets
-from .serializers import ProductsSerializer
+from .serializers import ProductsSerializer, BrandSerializer
 
 class ProductsViewset(viewsets.ModelViewSet):
     queryset = Products.objects.all()
@@ -30,6 +30,10 @@ class ProductsViewset(viewsets.ModelViewSet):
         if name:
             products = products.filter(name__contains=name)
         return products
+    
+class BrandViewset(viewsets.ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
 
 class HomeView(View):
     def get(self, request):
